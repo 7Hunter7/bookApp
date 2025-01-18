@@ -9,7 +9,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import BookList from '@/components/BookList.vue'
+import BookList from '@/views/BookList.vue'
 import BookForm from '@/components/BookForm.vue'
 import SearchInput from '@/components/SearchInput.vue'
 
