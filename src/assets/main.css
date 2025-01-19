@@ -1,18 +1,18 @@
 #app {
   max-width: 1024px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   font-weight: normal;
 }
 
 :root {
   --primary-color: #0f172a;
   --secondary-color: #707786;
-  --background-color: #dddfe4;
+  --background-color: #fff;
   --text-color: #0f172a;
   --success-color: #1c7d41;
   --error-color: #900b09;
-  --light-grey-color: #f5f6f6;
+  --light-grey-color: #dddfe4;
   --main-font: 'Inter', sans-serif;
   --border-radius: 8px;
   --padding-small: 8px;
