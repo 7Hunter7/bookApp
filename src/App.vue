@@ -57,8 +57,16 @@ const handleSearch = (query) => {
 
 <style lang="scss">
 .app {
-  max-width: 1024px;
+  background-color: #1a1a1a;
+  color: #fff;
+  font-family: sans-serif;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 40px;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 </style>
