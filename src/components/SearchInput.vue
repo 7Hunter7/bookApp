@@ -40,7 +40,13 @@ input {
   padding: 10px 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
+&:focus {
+  background-color: #555;
+  outline: none;
+}
+
 input::before {
   content: '';
   border-image: url('/search.svg');
