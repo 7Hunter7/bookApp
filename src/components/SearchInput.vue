@@ -1,14 +1,18 @@
 <template>
-  <input
-    type="text"
-    placeholder="Найти ту самую книгу"
-    v-model="searchQuery"
-    @input="handleInput"
-  />
+  <section class="search-input">
+    <img :src="Icon" alt="Icon" />
+    <input
+      type="text"
+      placeholder="Найти ту самую книгу"
+      v-model="searchQuery"
+      @input="handleInput"
+    />
+  </section>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import Icon from '/Icon.svg'
 
 const searchQuery = ref('')
 
@@ -20,11 +24,27 @@ const handleInput = () => {
 </script>
 
 <style lang="scss" scoped>
+.search-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+img {
+  max-width: 10%;
+}
 input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 20px;
   width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+input::before {
+  content: '';
+  border-image: url('/search.svg');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 </style>
