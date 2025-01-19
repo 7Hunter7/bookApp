@@ -9,8 +9,12 @@
       </div>
     </div>
     <div class="book-item-actions">
-      <button @click="editBook"><Edit name="edit" /></button>
-      <button @click="deleteBook"><Delete name="delete" /></button>
+      <button @click="editBook">
+        <img :src="Edit" alt="Edit" />
+      </button>
+      <button @click="deleteBook">
+        <img :src="Delete" alt="Delete" />
+      </button>
     </div>
   </li>
 </template>
@@ -18,6 +22,7 @@
 <script setup>
 import Edit from '/file-edit.svg'
 import Delete from '/trash.svg'
+
 defineProps({
   book: {
     type: Object,
