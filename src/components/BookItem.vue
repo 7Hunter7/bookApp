@@ -9,11 +9,11 @@
       </div>
     </div>
     <div class="book-item-actions">
-      <button @click="editBook">
-        <img :src="Edit" alt="Edit" />
-      </button>
       <button @click="deleteBook">
         <img :src="Delete" alt="Delete" />
+      </button>
+      <button @click="editBook">
+        <img :src="Edit" alt="Edit" />
       </button>
     </div>
   </li>
@@ -42,14 +42,20 @@ const deleteBook = () => {
 
 <style lang="scss" scoped>
 .book-item {
-  background-color: #f0f0f0;
-  margin-top: 16px;
-  margin-bottom: 16px;
-  padding: 16px;
-  border: 2px solid var(--f7f8fa);
-  border-radius: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: var(--padding-medium);
+  border: 2px solid var(--light-grey-color);
+  border-radius: var(--border-radius);
   flex-basis: calc(33.33% - 20px);
 }
+.book-item:hover {
+  background-color: var(--light-grey-color);
+}
+
 .book-item h3 {
   margin-top: 0;
   margin-bottom: 8px;
@@ -58,13 +64,23 @@ const deleteBook = () => {
   display: flex;
   flex-direction: row;
   justify-content: start;
-  gap: 16px;
+  gap: 1rem;
 }
 .book-item-actions {
   display: flex;
   flex-direction: row;
   justify-content: end;
-  gap: 16px;
+  gap: 1rem;
+}
+button {
+  border: none;
+  background-color: var(--background-color);
+}
+.book-item:hover button {
+  background-color: var(--light-grey-color);
+}
+button:hover svg {
+  fill: var(--error-color);
 }
 
 @media (max-width: 768px) {
