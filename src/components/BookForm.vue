@@ -85,10 +85,10 @@ const submitForm = () => {
 .book-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
   padding: 20px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
 
   div {
     display: flex;
@@ -99,19 +99,29 @@ const submitForm = () => {
     margin-bottom: 5px;
   }
 
-  input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+  input,
+  select {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #444;
+    color: #fff;
   }
 
   button {
-    padding: 10px 15px;
-    background-color: #007bff;
+    padding: 12px 20px;
+    background-color: #28a745;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  &:hover {
+    background-color: var(--success-color);
   }
 }
 </style>
