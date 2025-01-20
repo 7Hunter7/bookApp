@@ -9,7 +9,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import Close from '/icons/close-grey.svg'
+import Close from '/icons/close-white.svg'
 
 const props = defineProps({
   message: {
