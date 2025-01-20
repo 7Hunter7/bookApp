@@ -20,7 +20,11 @@ defineProps({
   list-style: none;
   padding: 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: stretch;
   gap: 20px;
 }
 </style>
