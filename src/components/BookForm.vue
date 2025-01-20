@@ -142,9 +142,8 @@ button {
   background-color: var(--success-color);
   color: var(--background-color);
   transition: background-color 0.3s ease;
-  // display: inline-flex;
-  // align-items: center;
-  // gap: 0.25rem;
+  display: inline-flex;
+  align-items: center;
   position: relative;
 }
 button::before {
