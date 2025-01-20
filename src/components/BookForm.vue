@@ -91,8 +91,8 @@ const submitForm = () => {
   padding: 2rem;
   border: 2px solid var(--light-grey-color);
   border-radius: var(--border-radius);
-  max-width: 464px;
-  max-height: 501px;
+  max-width: 29rem;
+  max-height: 31.3125rem;
 }
 
 div {
@@ -101,12 +101,13 @@ div {
 }
 
 label {
-  margin-bottom: 5px;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
 }
 
 input,
 select {
-  padding: 10px;
+  padding: 0.625rem;
   border: none;
   border-radius: 4px;
   background-color: var(--light-grey-color);
@@ -117,6 +118,9 @@ select {
   flex-direction: row;
   justify-content: start;
   align-items: center;
+}
+.policy label {
+  font-weight: normal;
   font-size: 0.625rem;
 }
 .button-submit {
