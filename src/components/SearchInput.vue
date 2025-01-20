@@ -42,7 +42,7 @@ input {
   border-radius: 8px;
   transition: background-color 0.3s ease;
 }
-&:focus {
+input:focus {
   background-color: #555;
   outline: none;
 }
