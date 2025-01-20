@@ -18,13 +18,13 @@ defineProps({
 <style lang="scss" scoped>
 .book-list {
   list-style: none;
-  padding: 0;
+  padding: 1rem 2.5rem;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   align-content: center;
   justify-content: center;
   align-items: stretch;
-  gap: 20px;
+  gap: 1rem;
 }
 </style>
