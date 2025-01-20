@@ -45,7 +45,12 @@
       </label>
     </div>
     <div class="button-submit">
-      <ButtonWithIcon type="submit" icon="/icons/file-check.svg" text="Добавить" />
+      <ButtonWithIcon
+        type="submit"
+        icon="/icons/file-check.svg"
+        text="Добавить"
+        buttonStyle="success"
+      />
     </div>
   </form>
 </template>
