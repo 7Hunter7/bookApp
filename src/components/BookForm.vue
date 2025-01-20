@@ -142,9 +142,21 @@ button {
   background-color: var(--success-color);
   color: var(--background-color);
   transition: background-color 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
+  // display: inline-flex;
+  // align-items: center;
+  // gap: 0.25rem;
+  position: relative;
+}
+button::before {
+  content: '';
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-image: url('/icons/file-check.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 0.25rem;
 }
 button:hover {
   background-color: var(--success-color);
