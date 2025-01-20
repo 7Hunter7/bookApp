@@ -2,29 +2,17 @@
   <div class="app">
     <h1>Список Книг</h1>
     <SearchInput @search="handleSearch" />
-    <BookList :books="filteredBooks" @edit-book="openEditModal" @delete-book="openDeleteModal" />
-    <BookForm @book-added="handleBookAdded" />
-    <Modal :isOpen="isModalOpen" title="Редактирование книги" @close="closeModal">
+    <BookList :books="filteredBooks" @edit-book="openEditModal" />
+    <BookForm
+      :isOpen="isModalOpen"
+      @book-added="handleBookAdded"
+      @delete-book="openDeleteModal"
+      @close="closeModal"
+    >
       <template #header>
         <h2>Редактирование книги</h2>
       </template>
       <form v-if="currentBook" class="book-form modal-book-form" @submit.prevent="saveBook">
-        <div>
-          <label for="title">Название</label>
-          <input type="text" id="title" v-model="currentBook.title" required />
-        </div>
-        <div>
-          <label for="author">Автор</label>
-          <input type="text" id="author" v-model="currentBook.author" required />
-        </div>
-        <div>
-          <label for="year">Год</label>
-          <input type="number" id="year" v-model.number="currentBook.year" />
-        </div>
-        <div>
-          <label for="genre">Жанр</label>
-          <input type="text" id="genre" v-model="currentBook.genre" />
-        </div>
         <div class="modal-actions">
           <ButtonWithIcon
             type="submit"
@@ -39,15 +27,9 @@
             buttonStyle="errors"
             @click="deleteBook"
           />
-          <div class="checkbox">
-            <input type="checkbox" id="confirm" v-model="agreed" />
-            <label for="confirm"
-              >Я согласен с условиями <a href="#">Политики конфиденциальности</a></label
-            >
-          </div>
         </div>
       </form>
-    </Modal>
+    </BookForm>
 
     <Modal :isOpen="isDeleteModalOpen" title="Подтверждение удаления" @close="closeDeleteModal">
       <template #header>
