@@ -3,15 +3,15 @@
     <div class="book-item-content">
       <h3>{{ book.title }}</h3>
       <div class="book-item-description">
-        <p>Автор: {{ book.author }}</p>
-        <p>Год: {{ book.year }}</p>
-        <p>Жанр: {{ book.genre }}</p>
+        <p>{{ book.author }}</p>
+        <p>{{ book.year }}</p>
+        <p>{{ book.genre }}</p>
       </div>
     </div>
     <div class="book-item-actions">
-      <button @click="deleteBook">
+      <!-- <button @click="deleteBook">
         <img :src="Delete" alt="Delete" />
-      </button>
+      </button> -->
       <button @click="editBook">
         <img :src="Edit" alt="Edit" />
       </button>
@@ -21,7 +21,7 @@
 
 <script setup>
 import Edit from '/file-edit.svg'
-import Delete from '/trash.svg'
+// import Delete from '/trash.svg'
 
 defineProps({
   book: {
