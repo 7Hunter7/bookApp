@@ -39,3 +39,6 @@ input {
   line-height: 150%;
   color: var(--secondary-color);
 }
+input {
+  line-height: 100%;
+}

@@ -47,7 +47,7 @@
     <div class="button-submit">
       <ButtonWithIcon
         type="submit"
-        icon="/icons/file-check.svg"
+        icon="/icons/file-plus.svg"
         text="Добавить"
         buttonStyle="success"
       />
@@ -124,6 +124,12 @@ select {
   border-radius: 0.25rem;
   background-color: var(--light-grey-color);
 }
+.button-submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+}
 .policy {
   display: flex;
   flex-direction: row;
@@ -133,6 +139,42 @@ select {
 .policy label {
   font-weight: normal;
   font-size: 0.625rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+.policy label a {
+  margin-left: -0.25rem;
+}
+// Стили для кастомного чекбокса
+.policy input[type='checkbox'] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 2px solid var(--secondary-color);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  position: relative;
+}
+
+.policy input[type='checkbox']:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 1.25rem;
+  height: 1.25rem;
+  background-image: url('/icons/checkbox-checked.svg');
+  background-position: center;
+  border-radius: 0.25rem;
+  transition: transform 0.2s ease-in-out;
+}
+.policy input[type='checkbox']:checked:before {
+  transform: translate(-50%, -50%) scale(1);
 }
 .button-submit {
   display: flex;
