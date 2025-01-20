@@ -88,6 +88,7 @@ const submitForm = () => {
   gap: 16px;
   padding: 20px;
   border: 1px solid #ccc;
+  background-color: #2a2a2a;
   border-radius: 8px;
 
   div {
@@ -97,6 +98,7 @@ const submitForm = () => {
 
   label {
     margin-bottom: 5px;
+    color: #fff;
   }
 
   input,
@@ -120,7 +122,7 @@ const submitForm = () => {
     align-items: center;
     gap: 5px;
   }
-  &:hover {
+  button:hover {
     background-color: var(--success-color);
   }
 }
