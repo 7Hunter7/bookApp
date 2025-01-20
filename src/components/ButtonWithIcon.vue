@@ -5,7 +5,14 @@
     :class="buttonClass"
     @click="$emit('click', $event)"
   >
-    <span v-if="icon" class="icon" :style="{ backgroundImage: `url(${icon})` }"></span>
+    <span
+      v-if="icon"
+      class="icon"
+      :style="{
+        backgroundImage: `url(${icon})`,
+        filter: iconFilter,
+      }"
+    ></span>
     <slot v-if="text">{{ text }}</slot>
   </button>
 </template>
@@ -19,6 +26,10 @@ const props = defineProps({
     default: 'submit',
   },
   icon: {
+    type: String,
+    default: null,
+  },
+  iconColor: {
     type: String,
     default: null,
   },
@@ -36,6 +47,13 @@ const emit = defineEmits(['click'])
 
 const buttonClass = computed(() => {
   return `button-style--${props.buttonStyle}`
+})
+
+const iconFilter = computed(() => {
+  if (props.iconColor) {
+    return `brightness(0) saturate(100%) invert(77%) sepia(8%) saturate(446%) hue-rotate(175deg) brightness(105%) contrast(90%)`
+  }
+  return null
 })
 </script>
 
