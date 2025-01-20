@@ -2,9 +2,16 @@
   <div class="app">
     <h1>Список Книг</h1>
     <SearchInput @search="handleSearch" />
+    <ButtonWithIcon
+      type="submit"
+      icon="/icons/file-plus.svg"
+      text="Добавить книгу"
+      buttonStyle="success"
+      @click="openAddModal"
+    />
     <BookList :books="filteredBooks" @edit-book="openEditModal" />
     <BookForm
-      :isOpen="isModalOpen"
+      :isOpen="(isModalOpen, isAddModalOpen)"
       @book-added="handleBookAdded"
       @delete-book="openDeleteModal"
       @close="closeModal"
@@ -85,6 +92,7 @@ const books = ref([
 const searchQuery = ref('')
 const isModalOpen = ref(false)
 const isDeleteModalOpen = ref(false)
+const isAddModalOpen = ref(false)
 const currentBook = ref(null)
 const agreed = ref(false)
 const notification = ref({ message: '', type: '' })
