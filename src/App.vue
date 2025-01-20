@@ -2,14 +2,11 @@
   <div class="app">
     <h1>Список Книг</h1>
     <SearchInput @search="handleSearch" />
-    <BookList :books="filteredBooks" />
+    <BookList :books="filteredBooks" @edit-book="openEditModal" @delete-book="openDeleteModal" />
     <BookForm @book-added="handleBookAdded" />
     <Modal :isOpen="isModalOpen" title="Редактирование книги" @close="closeModal">
       <template #header>
-        <h2>
-          <Icon name="edit" />
-          Редактирование книги
-        </h2>
+        <h2>Редактирование книги</h2>
       </template>
       <form v-if="currentBook" class="book-form modal-book-form" @submit.prevent="saveBook">
         <div>
@@ -29,14 +26,23 @@
           <input type="text" id="genre" v-model="currentBook.genre" />
         </div>
         <div class="modal-actions">
-          <button class="save-button" type="submit"><Icon name="save" /> Сохранить</button>
-          <button class="delete-button" type="button" @click="deleteBook">
-            <Icon name="delete" /> Удалить
-          </button>
+          <ButtonWithIcon
+            type="submit"
+            icon="/icons/file-check.svg"
+            text="Сохранить"
+            buttonStyle="success"
+            @click="saveBook"
+          />
+          <ButtonWithIcon
+            type="submit"
+            icon="/icons/trash.svg"
+            buttonStyle="errors"
+            @click="deleteBook"
+          />
           <div class="checkbox">
             <input type="checkbox" id="confirm" v-model="agreed" />
             <label for="confirm"
-              >Я согласен с условиями <a href="">Политики конфиденциальности</a></label
+              >Я согласен с условиями <a href="#">Политики конфиденциальности</a></label
             >
           </div>
         </div>
@@ -45,10 +51,7 @@
 
     <Modal :isOpen="isDeleteModalOpen" title="Подтверждение удаления" @close="closeDeleteModal">
       <template #header>
-        <h2>
-          <Icon name="delete" />
-          Подтверждение удаления
-        </h2>
+        <h2>Подтверждение удаления</h2>
       </template>
       <p>Вы действительно хотите удалить книгу "{{ currentBook?.title }}"?</p>
       <div class="modal-actions">
@@ -56,6 +59,13 @@
         <button @click="closeDeleteModal">Нет</button>
       </div>
     </Modal>
+
+    <Notification
+      v-if="notification.message"
+      :message="notification.message"
+      :type="notification.type"
+      @close="closeNotification"
+    />
   </div>
 </template>
 
@@ -65,6 +75,8 @@ import BookList from '@/views/BookList.vue'
 import BookForm from '@/components/BookForm.vue'
 import SearchInput from '@/components/SearchInput.vue'
 import Modal from '@/components/Modal.vue'
+import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
+import Notification from './components/Notification.vue'
 
 const books = ref([
   {
@@ -93,6 +105,7 @@ const isModalOpen = ref(false)
 const isDeleteModalOpen = ref(false)
 const currentBook = ref(null)
 const agreed = ref(false)
+const notification = ref({ message: '', type: '' })
 
 const filteredBooks = computed(() => {
   if (!searchQuery.value) {
@@ -105,6 +118,7 @@ const filteredBooks = computed(() => {
 
 const handleBookAdded = (newBook) => {
   books.value.push(newBook)
+  showSuccess('Книга добавлена')
 }
 
 const handleSearch = (query) => {
@@ -134,7 +148,7 @@ const closeDeleteModal = () => {
 
 const saveBook = () => {
   if (!agreed.value) {
-    alert('Необходимо принять условия')
+    showError('Необходимо принять условия')
     return
   }
   const index = books.value.findIndex((book) => book.title === currentBook.value.title)
@@ -142,6 +156,7 @@ const saveBook = () => {
     books.value[index] = { ...currentBook.value }
   }
   closeModal()
+  showSuccess('Книга изменена')
 }
 
 const deleteBook = () => {
@@ -155,6 +170,17 @@ const confirmDelete = () => {
     books.value.splice(index, 1)
   }
   closeDeleteModal()
+  showSuccess('Книга удалена')
+}
+
+const showSuccess = (message) => {
+  notification.value = { message, type: 'success' }
+}
+const showError = (message) => {
+  notification.value = { message, type: 'error' }
+}
+const closeNotification = () => {
+  notification.value = { message: '', type: '' }
 }
 </script>
 
@@ -176,41 +202,6 @@ h1 {
   align-items: center;
 }
 
-.save-button {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.delete-button {
-  color: white;
-  border: 1px solid #dc3545;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: transparent;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.confirm-delete-button {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
 .checkbox {
   display: flex;
   align-items: center;
