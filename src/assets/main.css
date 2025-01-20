@@ -26,3 +26,10 @@ body {
   background-color: var(--background-color);
   color: var(--primary-color);
 }
+
+p {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 150%;
+  color: var(--secondary-color);
+}

@@ -84,6 +84,9 @@ const submitForm = () => {
 </script>
 
 <style lang="scss" scoped>
+.book-form-content {
+  margin: 0rem;
+}
 .book-form {
   display: flex;
   flex-direction: column;
@@ -94,25 +97,27 @@ const submitForm = () => {
   max-width: 29rem;
   max-height: 31.3125rem;
 }
-
 div {
   display: flex;
   flex-direction: column;
 }
-
+h3 {
+  margin: 0rem;
+}
+p {
+  margin-top: 0.5rem;
+}
 label {
   font-weight: bold;
   margin-bottom: 0.25rem;
 }
-
 input,
 select {
   padding: 0.625rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background-color: var(--light-grey-color);
 }
-
 .policy {
   display: flex;
   flex-direction: row;
@@ -129,7 +134,6 @@ select {
   justify-content: end;
   align-items: center;
 }
-
 button {
   padding: 0.625rem 0.75rem;
   border-radius: var(--border-radius-small);
