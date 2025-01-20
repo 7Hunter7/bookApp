@@ -46,11 +46,11 @@ const deleteBook = () => {
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1rem;
   padding: var(--padding-medium);
   border: 2px solid var(--light-grey-color);
   border-radius: var(--border-radius);
   flex-basis: calc(33.33% - 20px);
+  max-height: 5rem;
 }
 .book-item:hover {
   background-color: var(--light-grey-color);
@@ -64,7 +64,9 @@ const deleteBook = () => {
   display: flex;
   flex-direction: row;
   justify-content: start;
+  align-items: center;
   gap: 1rem;
+  max-height: 1.3rem;
 }
 .book-item-actions {
   display: flex;
