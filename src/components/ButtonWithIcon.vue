@@ -61,34 +61,37 @@ const buttonClass = computed(() => {
 }
 
 .button-style--default {
-  background-color: var(--grey-color);
-  color: var(--background-color);
-}
-.button-style--default:hover {
   background-color: var(--light-grey-color);
 }
-
 .button-style--success {
   background-color: var(--success-color);
-  color: var(--background-color);
-}
-.button-style--success:hover {
-  background-color: var(--secondary-color);
 }
 .button-style--errors {
   background-color: var(--error-color);
+}
+.button-style--default,
+.button-style--success,
+.button-style--errors {
   color: var(--background-color);
 }
+.button-style--default:hover,
+.button-style--success:hover,
 .button-style--errors:hover {
-  background-color: var(--error-color);
+  color: var(--light-grey-color);
 }
-
+.button-style--default:active,
+.button-style--success:active,
+.button-style--errors:active {
+  color: var(--grey-color);
+}
 .button-style--text {
   background-color: transparent;
   color: var(--background-color);
-  padding: 0;
 }
 .button-style--text:hover {
   color: var(--light-grey-color);
+}
+.button-style--text:active {
+  color: var(--grey-color);
 }
 </style>
