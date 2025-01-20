@@ -88,7 +88,6 @@ const submitForm = () => {
   gap: 16px;
   padding: 20px;
   border: 1px solid #ccc;
-  background-color: #2a2a2a;
   border-radius: 8px;
 
   div {
@@ -98,7 +97,6 @@ const submitForm = () => {
 
   label {
     margin-bottom: 5px;
-    color: #fff;
   }
 
   input,
@@ -106,8 +104,7 @@ const submitForm = () => {
     padding: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #444;
-    color: #fff;
+    background-color: var(--light-grey-color);
   }
 
   button {
