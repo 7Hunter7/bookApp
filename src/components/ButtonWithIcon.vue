@@ -16,7 +16,7 @@ import { computed } from 'vue'
 const props = defineProps({
   type: {
     type: String,
-    default: 'button',
+    default: 'submit',
   },
   icon: {
     type: String,
@@ -52,34 +52,43 @@ const buttonClass = computed(() => {
 }
 .icon {
   display: inline-block;
-  width: 15px; /* Настройте ширину иконки */
-  height: 15px; /* Настройте высоту иконки */
+  width: 1.25rem;
+  height: 1.25rem;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  margin-right: 0.25rem;
 }
 
 .button-style--default {
-  background-color: var(--success-color);
+  background-color: var(--grey-color);
   color: var(--background-color);
+}
+.button-style--default:hover {
+  background-color: var(--light-grey-color);
 }
 
-.button-style--default:hover {
+.button-style--success {
   background-color: var(--success-color);
-}
-.button-style--secondary {
-  background-color: var(--secondary-color);
   color: var(--background-color);
 }
-.button-style--secondary:hover {
+.button-style--success:hover {
   background-color: var(--secondary-color);
 }
+.button-style--errors {
+  background-color: var(--error-color);
+  color: var(--background-color);
+}
+.button-style--errors:hover {
+  background-color: var(--error-color);
+}
+
 .button-style--text {
   background-color: transparent;
-  color: var(--text-color);
+  color: var(--background-color);
   padding: 0;
 }
 .button-style--text:hover {
-  color: var(--text-color-hover);
+  color: var(--light-grey-color);
 }
 </style>
