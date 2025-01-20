@@ -43,7 +43,7 @@ input {
   transition: background-color 0.3s ease;
 }
 input:focus {
-  background-color: #555;
+  background-color: var(--light-grey-color);
   outline: none;
 }
 
