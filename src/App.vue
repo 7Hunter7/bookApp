@@ -95,6 +95,7 @@ const isDeleteModalOpen = ref(false)
 const isAddModalOpen = ref(false)
 const currentBook = ref(null)
 const agreed = ref(false)
+const agreedAdd = ref(false)
 const notification = ref({ message: '', type: '' })
 
 const filteredBooks = computed(() => {
@@ -113,6 +114,14 @@ const handleBookAdded = (newBook) => {
 
 const handleSearch = (query) => {
   searchQuery.value = query
+}
+
+const openAddModal = () => {
+  isAddModalOpen.value = true
+  agreedAdd.value = false
+}
+const closeAddModal = () => {
+  isAddModalOpen.value = false
 }
 
 const openEditModal = (book) => {
