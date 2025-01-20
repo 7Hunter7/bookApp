@@ -85,42 +85,44 @@ const submitForm = () => {
 .book-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  gap: 1rem;
+  padding: 2rem;
+  border: 2rem solid var(--light-grey-color);
+  border-radius: var(--border-radius);
+  max-width: 464px;
+  max-height: 501px;
+}
 
-  div {
-    display: flex;
-    flex-direction: column;
-  }
+div {
+  display: flex;
+  flex-direction: column;
+}
 
-  label {
-    margin-bottom: 5px;
-  }
+label {
+  margin-bottom: 5px;
+}
 
-  input,
-  select {
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: var(--light-grey-color);
-  }
+input,
+select {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--light-grey-color);
+}
 
-  button {
-    padding: 12px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-  button:hover {
-    background-color: var(--success-color);
-  }
+button {
+  padding: 0.625rem 0.75rem;
+  border-radius: var(--border-radius-small);
+  border: none;
+  cursor: pointer;
+  background-color: var(--success-color);
+  color: var(--background-color);
+  transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+button:hover {
+  background-color: var(--success-color);
 }
 </style>
