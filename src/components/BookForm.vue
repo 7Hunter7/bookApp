@@ -53,12 +53,20 @@
       />
     </div>
   </form>
+  <Notification
+    v-if="notification.message"
+    :message="notification.message"
+    :type="notification.type"
+    @close="closeNotification"
+  />
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
+import Notification from './components/Notification.vue'
 
+const notification = ref({ message: '', type: '' })
 const newBook = ref({
   title: '',
   author: '',
@@ -72,20 +80,27 @@ const emit = defineEmits(['book-added'])
 
 const submitForm = () => {
   if (!isAgreed.value) {
-    alert('Для добавления книги нужно согласиться с политикой конфиденциальности')
+    showError('Для добавления книги нужно согласиться с политикой конфиденциальности')
     return
   }
 
   if (newBook.value.title && newBook.value.author) {
     if (newBook.value.year && newBook.value.year > new Date().getFullYear()) {
-      alert('Год не может быть больше текущего')
+      showError('Год не может быть больше текущего')
       return
     }
     emit('book-added', { ...newBook.value })
     newBook.value = { title: '', author: '', year: null, genre: '' }
   } else {
-    alert('Название и автор обязательны для заполнения!')
+    showError('Название и автор обязательны для заполнения!')
   }
+}
+
+const showError = (message) => {
+  notification.value = { message, type: 'error' }
+}
+const closeNotification = () => {
+  notification.value = { message: '', type: '' }
 }
 </script>
 
