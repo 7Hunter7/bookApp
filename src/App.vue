@@ -118,7 +118,7 @@ const filteredBooks = computed(() => {
 
 const handleBookAdded = (newBook) => {
   books.value.push(newBook)
-  showSuccess('Книга добавлена')
+  showSuccess('Книга добавлена в список')
 }
 
 const handleSearch = (query) => {
