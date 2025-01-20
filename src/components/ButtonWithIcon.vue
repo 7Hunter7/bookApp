@@ -45,6 +45,7 @@ const buttonClass = computed(() => {
   border-radius: var(--border-radius-small);
   border: none;
   cursor: pointer;
+  transition: color 0.3s ease;
   transition: background-color 0.3s ease;
   display: inline-flex;
   align-items: center;
