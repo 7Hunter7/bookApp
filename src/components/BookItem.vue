@@ -20,8 +20,8 @@
 </template>
 
 <script setup>
-import Edit from '/file-edit.svg'
-// import Delete from '/trash.svg'
+import Edit from '/icons/file-edit.svg'
+// import Delete from '/icons/trash.svg'
 
 defineProps({
   book: {
