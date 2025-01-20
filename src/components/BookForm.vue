@@ -37,14 +37,16 @@
         placeholder="Добавьте жанр произведения"
       />
     </div>
-    <div>
+    <div class="policy">
       <label>
         <input type="checkbox" v-model="isAgreed" />
         Я согласен с условиями
         <a href="/privacy-policy" target="_blank">Политики конфиденциальности</a>
       </label>
     </div>
-    <button type="submit">Добавить</button>
+    <div class="button-submit">
+      <button type="submit">Добавить</button>
+    </div>
   </form>
 </template>
 
@@ -87,7 +89,7 @@ const submitForm = () => {
   flex-direction: column;
   gap: 1rem;
   padding: 2rem;
-  border: 2rem solid var(--light-grey-color);
+  border: 2px solid var(--light-grey-color);
   border-radius: var(--border-radius);
   max-width: 464px;
   max-height: 501px;
@@ -108,6 +110,20 @@ select {
   border: none;
   border-radius: 4px;
   background-color: var(--light-grey-color);
+}
+
+.policy {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  font-size: 0.625rem;
+}
+.button-submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
 }
 
 button {
