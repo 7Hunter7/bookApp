@@ -1,6 +1,6 @@
 <template>
   <section class="search-input">
-    <Icon name="search" />
+    <img :src="Icon" alt="Icon" />
     <input
       type="text"
       placeholder="Найти ту самую книгу"
@@ -12,7 +12,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import Icon from './Icon.vue'
+import Icon from '/icons/Icon.svg'
 
 const searchQuery = ref('')
 
