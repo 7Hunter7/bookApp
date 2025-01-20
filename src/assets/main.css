@@ -26,13 +26,14 @@ body {
   background-color: var(--background-color);
   color: var(--primary-color);
 }
-h2,
+
 h3 {
   font-weight: 400;
   font-size: 1rem;
   line-height: 120%;
 }
-p {
+p,
+input {
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 150%;

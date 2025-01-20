@@ -29,8 +29,10 @@ const handleInput = () => {
   flex-direction: row;
   align-items: center;
   gap: 25px;
-  margin-top: 16px;
-  margin-bottom: 16px;
+  padding: 1rem 2.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background-color: var(--light-grey-color);
 }
 img {
   max-width: 10%;
@@ -38,19 +40,17 @@ img {
 input {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #ccc;
   border-radius: 8px;
-  transition: background-color 0.3s ease;
-}
-input:focus {
-  background-color: var(--light-grey-color);
-  outline: none;
+  border: 2px solid var(--light-grey-color);
+  transition: border 0.3s ease;
+  background-image: url('/icons/search.svg');
+  background-repeat: no-repeat;
+  background-position: 0.75rem center;
+  padding-left: 2.25rem;
 }
 
-input::before {
-  content: '';
-  border-image: url('/search.svg');
-  background-repeat: no-repeat;
-  background-position: center;
+input:focus {
+  border: 2px solid var(--grey-color);
+  outline: none;
 }
 </style>
