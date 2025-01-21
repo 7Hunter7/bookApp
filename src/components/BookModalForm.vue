@@ -70,7 +70,7 @@ const props = defineProps({
 const isAgreed = ref(false)
 const currentBook = ref({ ...props.book })
 
-const emit = defineEmits(['submit'])
+const emit = defineEmits(['submit', 'update:isFormValid'])
 const formTitle = computed(() =>
   props.mode === 'edit' ? 'Редактирование книги' : 'Добавить книгу',
 )
@@ -91,6 +91,10 @@ watch(
     currentBook.value = { ...newVal }
   },
 )
+
+watch(isFormValid, (newVal) => {
+  emit('update:isFormValid', newVal)
+})
 </script>
 
 <style lang="scss" scoped>
