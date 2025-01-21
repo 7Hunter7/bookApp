@@ -4,6 +4,7 @@
     <SearchInput @search="handleSearch" />
     <ButtonWithIcon
       type="submit"
+      :disabled="!isFormValid"
       icon="/icons/file-plus.svg"
       text="Добавить книгу"
       buttonStyle="success"
