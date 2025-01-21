@@ -2,12 +2,43 @@ import { defineStore } from 'pinia'
 
 export const useBookStore = defineStore('book', {
   state: () => ({
-    books: [],
+    books: [
+      {
+        id: '1',
+        title: 'Как разговаривать с кем угодно, когда угодно, где угодно',
+        author: 'Ларри Кинг',
+        year: 2011,
+        genre: 'Научпоп',
+      },
+      {
+        id: '2',
+        title:
+          'Больше, чем просто красивая. 12 тайных сил женщины, перед которой невозможно устоять',
+        author: 'Кара Кинг',
+        year: 2020,
+        genre: 'Научпоп',
+      },
+      {
+        id: '3',
+        title:
+          'Искусство системного мышления. Необходимые знания о системах и творческом подходе к решению проблем',
+        author: "Джозеф О'Коннор и Иан Макдермотт",
+        year: 2018,
+        genre: 'Научпоп',
+      },
+      {
+        id: '4',
+        title: 'Как разговаривать с кем угодно, когда угодно, где угодно',
+        author: 'Ларри Кинг',
+        year: 2021,
+        genre: 'Научпоп',
+      },
+    ],
     searchQuery: '',
     isModalOpen: false,
     isDeleteModalOpen: false,
     isAddModalOpen: false,
-    currentBook: {}, // Инициализация пустым объектом
+    currentBook: {},
     notification: { message: '', type: '' },
   }),
   getters: {
@@ -40,7 +71,7 @@ export const useBookStore = defineStore('book', {
       }
       this.books.push(newBook)
       this.saveBooksToLocalStorage()
-      this.showSuccess('Книга добавлена')
+      this.showSuccess('Книга добавлена в список')
     },
     editBook(book) {
       Object.assign(this.currentBook, book)
@@ -59,12 +90,12 @@ export const useBookStore = defineStore('book', {
       }
       this.closeDeleteModal()
       this.saveBooksToLocalStorage()
-      this.showSuccess('Книга удалена')
+      this.showSuccess('Книга удалена. Вернуть её')
     },
     updateBook(updatedBook) {
       const index = this.books.findIndex((book) => book.id === updatedBook.id)
       if (index !== -1) {
-        Object.assign(this.books[index], updatedBook) // Более эффективный способ обновления
+        Object.assign(this.books[index], updatedBook)
       }
       this.closeModal()
       this.saveBooksToLocalStorage()
