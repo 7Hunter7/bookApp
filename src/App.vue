@@ -10,16 +10,9 @@
       @click="openAddModal"
     />
     <BookList :books="filteredBooks" @edit-book="openEditModal" />
-    <BookForm
-      :isOpen="(isModalOpen, isAddModalOpen)"
-      @book-added="handleBookAdded"
-      @delete-book="openDeleteModal"
-      @close="closeModal"
-    >
-      <template #header>
-        <h2>Редактирование книги</h2>
-      </template>
-      <form v-if="currentBook" class="book-form modal-book-form" @submit.prevent="saveBook">
+    <Modal :isOpen="isModalOpen" @close="closeModal" :title="modalTitle">
+      <BookModalForm :book="currentBook" :mode="mode" @submit="handleBookSubmit" />
+      <template v-if="mode === 'edit'">
         <div class="modal-actions">
           <ButtonWithIcon
             type="submit"
@@ -32,11 +25,11 @@
             type="submit"
             icon="/icons/trash.svg"
             buttonStyle="errors"
-            @click="deleteBook"
+            @click="openDeleteModal"
           />
         </div>
-      </form>
-    </BookForm>
+      </template>
+    </Modal>
 
     <Modal :isOpen="isDeleteModalOpen" title="Подтверждение удаления" @close="closeDeleteModal">
       <template #header>
@@ -61,7 +54,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import BookList from '@/views/BookList.vue'
-import BookForm from '@/components/BookForm.vue'
+import BookModalForm from '@/components/BookModalForm.vue'
 import SearchInput from '@/components/SearchInput.vue'
 import Modal from '@/components/Modal.vue'
 import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
@@ -92,12 +85,14 @@ const books = ref([
 const searchQuery = ref('')
 const isModalOpen = ref(false)
 const isDeleteModalOpen = ref(false)
-const isAddModalOpen = ref(false)
-const currentBook = ref(null)
-const agreed = ref(false)
-const agreedAdd = ref(false)
+const mode = ref('add')
+const currentBook = ref({
+  title: '',
+  author: '',
+  year: null,
+  genre: '',
+})
 const notification = ref({ message: '', type: '' })
-
 const filteredBooks = computed(() => {
   if (!searchQuery.value) {
     return books.value
@@ -106,6 +101,16 @@ const filteredBooks = computed(() => {
     book.title.toLowerCase().includes(searchQuery.value.toLowerCase()),
   )
 })
+const modalTitle = computed(() =>
+  mode.value === 'edit' ? 'Редактирование книги' : 'Добавить книгу',
+)
+
+const handleBookSubmit = (book) => {
+  if (mode.value === 'add') {
+    handleBookAdded(book)
+  }
+  closeModal()
+}
 
 const handleBookAdded = (newBook) => {
   books.value.push(newBook)
@@ -117,50 +122,49 @@ const handleSearch = (query) => {
 }
 
 const openAddModal = () => {
-  isAddModalOpen.value = true
-  agreedAdd.value = false
-}
-const closeAddModal = () => {
-  isAddModalOpen.value = false
+  mode.value = 'add'
+  currentBook.value = {
+    title: '',
+    author: '',
+    year: null,
+    genre: '',
+  }
+  isModalOpen.value = true
 }
 
 const openEditModal = (book) => {
-  currentBook.value = book
+  mode.value = 'edit'
+  currentBook.value = { ...book }
   isModalOpen.value = true
-  agreed.value = false
 }
 
-const openDeleteModal = (book) => {
-  currentBook.value = book
+const openDeleteModal = () => {
+  isModalOpen.value = false
   isDeleteModalOpen.value = true
 }
 
 const closeModal = () => {
   isModalOpen.value = false
-  currentBook.value = null
+  isDeleteModalOpen.value = false
+  currentBook.value = {
+    title: '',
+    author: '',
+    year: null,
+    genre: '',
+  }
 }
 
 const closeDeleteModal = () => {
   isDeleteModalOpen.value = false
-  currentBook.value = null
 }
 
 const saveBook = () => {
-  if (!agreed.value) {
-    showError('Необходимо принять условия')
-    return
-  }
   const index = books.value.findIndex((book) => book.title === currentBook.value.title)
   if (index !== -1) {
     books.value[index] = { ...currentBook.value }
   }
   closeModal()
   showSuccess('Книга изменена')
-}
-
-const deleteBook = () => {
-  isModalOpen.value = false
-  isDeleteModalOpen.value = true
 }
 
 const confirmDelete = () => {
@@ -188,11 +192,6 @@ h1 {
   text-align: center;
   margin-bottom: 20px;
 }
-
-.modal-book-form {
-  padding: 0;
-  background-color: transparent;
-}
 .modal-actions {
   display: flex;
   justify-content: flex-end;
@@ -200,7 +199,6 @@ h1 {
   margin-top: 20px;
   align-items: center;
 }
-
 .checkbox {
   display: flex;
   align-items: center;
