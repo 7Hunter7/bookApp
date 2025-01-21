@@ -4,7 +4,6 @@
     <SearchInput @search="handleSearch" />
     <ButtonWithIcon
       type="submit"
-      :disabled="!isFormValid"
       icon="/icons/file-plus.svg"
       text="Добавить книгу"
       buttonStyle="success"
@@ -12,7 +11,12 @@
     />
     <BookList :books="filteredBooks" @edit-book="openEditModal" />
     <Modal :isOpen="isModalOpen" @close="closeModal" :title="modalTitle">
-      <BookModalForm :book="currentBook" :mode="mode" @submit="handleBookSubmit" />
+      <BookModalForm
+        :book="currentBook"
+        :mode="mode"
+        @submit="handleBookSubmit"
+        @update:isFormValid="isBookModalFormValid = $event"
+      />
       <template v-if="mode === 'edit'">
         <div class="modal-actions">
           <ButtonWithIcon
@@ -20,6 +24,7 @@
             icon="/icons/file-check.svg"
             text="Сохранить"
             buttonStyle="success"
+            :disabled="!isBookModalFormValid"
             @click="saveBook"
           />
           <ButtonWithIcon
@@ -27,6 +32,17 @@
             icon="/icons/trash.svg"
             buttonStyle="errors"
             @click="() => openDeleteModal(currentBook.id)"
+          />
+        </div>
+      </template>
+      <template v-else>
+        <div class="modal-actions">
+          <ButtonWithIcon
+            type="submit"
+            icon="/icons/file-plus.svg"
+            text="Добавить"
+            buttonStyle="success"
+            :disabled="!isBookModalFormValid"
           />
         </div>
       </template>
@@ -72,6 +88,7 @@ const isDeleteModalOpen = computed(() => bookStore.isDeleteModalOpen)
 const mode = ref('add')
 const currentBook = computed(() => bookStore.currentBook)
 const notification = computed(() => bookStore.notification)
+const isBookModalFormValid = ref(true)
 
 const handleBookSubmit = (book) => {
   if (mode.value === 'add') {
@@ -87,10 +104,12 @@ const handleSearch = (query) => {
 
 const openAddModal = () => {
   bookStore.openAddModal()
+  isBookModalFormValid.value = false
 }
 
 const openEditModal = (book) => {
   bookStore.editBook(book)
+  isBookModalFormValid.value = true
 }
 
 const openDeleteModal = (bookId) => {
