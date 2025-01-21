@@ -89,6 +89,9 @@ const mode = ref('add')
 const currentBook = computed(() => bookStore.currentBook)
 const notification = computed(() => bookStore.notification)
 const isBookModalFormValid = ref(true)
+const modalTitle = computed(() =>
+  mode.value === 'edit' ? 'Редактирование книги' : 'Добавить книгу',
+)
 
 const handleBookSubmit = (book) => {
   if (mode.value === 'add') {
@@ -103,11 +106,13 @@ const handleSearch = (query) => {
 }
 
 const openAddModal = () => {
+  console.log('Запуск openAddModal')
   bookStore.openAddModal()
   isBookModalFormValid.value = false
 }
 
 const openEditModal = (book) => {
+  console.log('Запуск openEditModal')
   bookStore.editBook(book)
   isBookModalFormValid.value = true
 }
