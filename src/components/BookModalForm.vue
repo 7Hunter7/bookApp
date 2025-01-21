@@ -48,12 +48,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 
 const props = defineProps({
   book: {
     type: Object,
     default: () => ({
+      id: '',
       title: '',
       author: '',
       year: null,
@@ -73,6 +74,16 @@ const emit = defineEmits(['submit'])
 const formTitle = computed(() =>
   props.mode === 'edit' ? 'Редактирование книги' : 'Добавить книгу',
 )
+
+const isFormValid = computed(() => {
+  return (
+    currentBook.value.title &&
+    currentBook.value.author &&
+    currentBook.value.year !== null &&
+    !isNaN(currentBook.value.year) &&
+    currentBook.value.year <= new Date().getFullYear()
+  )
+})
 
 watch(
   () => props.book,
