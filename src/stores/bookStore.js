@@ -7,7 +7,7 @@ export const useBookStore = defineStore('book', {
     isModalOpen: false,
     isDeleteModalOpen: false,
     isAddModalOpen: false,
-    currentBook: null,
+    currentBook: {}, // Инициализация пустым объектом
     notification: { message: '', type: '' },
   }),
   getters: {
@@ -28,20 +28,32 @@ export const useBookStore = defineStore('book', {
       }
     },
     addBook(newBook) {
+      // Валидация данных
+      if (
+        !newBook.title ||
+        !newBook.author ||
+        !/^\d{4}$/.test(newBook.year) ||
+        parseInt(newBook.year) > new Date().getFullYear()
+      ) {
+        this.showError('Некорректные данные')
+        return
+      }
       this.books.push(newBook)
       this.saveBooksToLocalStorage()
       this.showSuccess('Книга добавлена')
     },
     editBook(book) {
-      this.currentBook = book
+      Object.assign(this.currentBook, book)
       this.isModalOpen = true
     },
-    deleteBook() {
+    deleteBook(bookId) {
+      // Принимаем ID книги
       this.isModalOpen = false
       this.isDeleteModalOpen = true
+      this.currentBook = this.books.find((book) => book.id === bookId) // Ищем книгу по ID
     },
     confirmDelete() {
-      const index = this.books.findIndex((book) => book.title === this.currentBook.title)
+      const index = this.books.findIndex((book) => book.id === this.currentBook.id)
       if (index !== -1) {
         this.books.splice(index, 1)
       }
@@ -50,9 +62,9 @@ export const useBookStore = defineStore('book', {
       this.showSuccess('Книга удалена')
     },
     updateBook(updatedBook) {
-      const index = this.books.findIndex((book) => book.title === updatedBook.title)
+      const index = this.books.findIndex((book) => book.id === updatedBook.id)
       if (index !== -1) {
-        this.books[index] = { ...updatedBook }
+        Object.assign(this.books[index], updatedBook) // Более эффективный способ обновления
       }
       this.closeModal()
       this.saveBooksToLocalStorage()
@@ -60,11 +72,11 @@ export const useBookStore = defineStore('book', {
     },
     closeModal() {
       this.isModalOpen = false
-      this.currentBook = null
+      this.currentBook = {} // Очищаем currentBook
     },
     closeDeleteModal() {
       this.isDeleteModalOpen = false
-      this.currentBook = null
+      this.currentBook = {}
     },
     openAddModal() {
       this.isAddModalOpen = true
