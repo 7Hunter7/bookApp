@@ -26,7 +26,7 @@
             type="submit"
             icon="/icons/trash.svg"
             buttonStyle="errors"
-            @click="openDeleteModal"
+            @click="() => openDeleteModal(currentBook.id)"
           />
         </div>
       </template>
@@ -54,6 +54,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useBookStore } from '@/stores/bookStore'
 import BookList from '@/views/BookList.vue'
 import BookModalForm from '@/components/BookModalForm.vue'
 import SearchInput from '@/components/SearchInput.vue'
@@ -61,130 +62,59 @@ import Modal from '@/components/Modal.vue'
 import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
 import Notification from './components/Notification.vue'
 
-const books = ref([
-  {
-    title: 'Как разговаривать с кем угодно, когда угодно, где угодно',
-    author: 'Ларри Кинг',
-    year: 2011,
-    genre: 'Научпоп',
-  },
-  {
-    title: 'Больше, чем просто красивая. 12 тайных сил женщины, перед которой невозможно устоять',
-    author: 'Кара Кинг',
-    year: 2020,
-    genre: 'Научпоп',
-  },
-  {
-    title:
-      'Искусство системного мышления. Необходимые знания о системах и творческом подходе к решению проблем',
-    author: "Джозеф О'Коннор и Иан Макдермотт",
-    year: 2018,
-    genre: 'Научпоп',
-  },
-])
+const bookStore = useBookStore()
 
-const searchQuery = ref('')
-const isModalOpen = ref(false)
-const isDeleteModalOpen = ref(false)
+bookStore.initializeStore() // Загрузка данных из localStorage
+
+const filteredBooks = computed(() => bookStore.filteredBooks)
+const isModalOpen = computed(() => bookStore.isModalOpen)
+const isDeleteModalOpen = computed(() => bookStore.isDeleteModalOpen)
 const mode = ref('add')
-const currentBook = ref({
-  title: '',
-  author: '',
-  year: null,
-  genre: '',
-})
-const notification = ref({ message: '', type: '' })
-const filteredBooks = computed(() => {
-  if (!searchQuery.value) {
-    return books.value
-  }
-  return books.value.filter((book) =>
-    book.title.toLowerCase().includes(searchQuery.value.toLowerCase()),
-  )
-})
-const modalTitle = computed(() =>
-  mode.value === 'edit' ? 'Редактирование книги' : 'Добавить книгу',
-)
+const currentBook = computed(() => bookStore.currentBook)
+const notification = computed(() => bookStore.notification)
 
 const handleBookSubmit = (book) => {
   if (mode.value === 'add') {
-    handleBookAdded(book)
+    bookStore.addBook(book)
+  } else {
+    bookStore.updateBook(book)
   }
-  closeModal()
-}
-
-const handleBookAdded = (newBook) => {
-  books.value.push(newBook)
-  showSuccess('Книга добавлена в список')
 }
 
 const handleSearch = (query) => {
-  searchQuery.value = query
+  bookStore.setSearchQuery(query)
 }
 
 const openAddModal = () => {
-  mode.value = 'add'
-  currentBook.value = {
-    title: '',
-    author: '',
-    year: null,
-    genre: '',
-  }
-  isModalOpen.value = true
+  bookStore.openAddModal()
 }
 
 const openEditModal = (book) => {
-  mode.value = 'edit'
-  currentBook.value = { ...book }
-  isModalOpen.value = true
+  bookStore.editBook(book)
 }
 
-const openDeleteModal = () => {
-  isModalOpen.value = false
-  isDeleteModalOpen.value = true
+const openDeleteModal = (bookId) => {
+  bookStore.deleteBook(bookId)
 }
 
 const closeModal = () => {
-  isModalOpen.value = false
-  isDeleteModalOpen.value = false
-  currentBook.value = {
-    title: '',
-    author: '',
-    year: null,
-    genre: '',
-  }
+  bookStore.closeModal()
 }
 
 const closeDeleteModal = () => {
-  isDeleteModalOpen.value = false
+  bookStore.closeDeleteModal()
 }
 
 const saveBook = () => {
-  const index = books.value.findIndex((book) => book.title === currentBook.value.title)
-  if (index !== -1) {
-    books.value[index] = { ...currentBook.value }
-  }
-  closeModal()
-  showSuccess('Книга изменена')
+  bookStore.updateBook(currentBook.value)
 }
 
 const confirmDelete = () => {
-  const index = books.value.findIndex((book) => book.title === currentBook.value.title)
-  if (index !== -1) {
-    books.value.splice(index, 1)
-  }
-  closeDeleteModal()
-  showSuccess('Книга удалена')
+  bookStore.confirmDelete()
 }
 
-const showSuccess = (message) => {
-  notification.value = { message, type: 'success' }
-}
-const showError = (message) => {
-  notification.value = { message, type: 'error' }
-}
 const closeNotification = () => {
-  notification.value = { message: '', type: '' }
+  bookStore.closeNotification()
 }
 </script>
 
