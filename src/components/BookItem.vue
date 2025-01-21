@@ -9,9 +9,6 @@
       </div>
     </div>
     <div class="book-item-actions">
-      <!-- <button @click="deleteBook">
-        <img :src="Delete" alt="Delete" />
-      </button> -->
       <button @click="editBook">
         <img :src="Edit" alt="Edit" />
       </button>
@@ -21,22 +18,18 @@
 
 <script setup>
 import Edit from '/icons/file-edit.svg'
-// import Delete from '/icons/trash.svg'
 
-defineProps({
+const props = defineProps({
   book: {
     type: Object,
     required: true,
   },
 })
 
-const emit = defineEmits(['edit-book', 'delete-book'])
+const emit = defineEmits(['edit-book'])
 
 const editBook = () => {
-  emit('edit-book')
-}
-const deleteBook = () => {
-  emit('delete-book')
+  emit('edit-book', props.book)
 }
 </script>
 
