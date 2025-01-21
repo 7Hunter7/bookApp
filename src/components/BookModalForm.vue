@@ -1,7 +1,7 @@
 <template>
-  <form class="book-form" @submit.prevent="submitForm">
+  <form class="book-form" @submit.prevent="$emit('submit', currentBook)">
     <div class="book-form-content">
-      <h3>Добавить книгу</h3>
+      <h3>{{ formTitle }}</h3>
       <p>Заполните все поля и добавьте книгу в список</p>
     </div>
     <div>
@@ -9,7 +9,7 @@
       <input
         type="text"
         id="title"
-        v-model="newBook.title"
+        v-model="currentBook.title"
         placeholder="Название произведения"
         required
       />
@@ -19,21 +19,21 @@
       <input
         type="text"
         id="author"
-        v-model="newBook.author"
+        v-model="currentBook.author"
         placeholder="Имя и фамилия автора"
         required
       />
     </div>
     <div>
       <label for="year">Год</label>
-      <input type="number" id="year" v-model.number="newBook.year" placeholder="Год выпуска" />
+      <input type="number" id="year" v-model.number="currentBook.year" placeholder="Год выпуска" />
     </div>
     <div>
       <label for="genre">Жанр</label>
       <input
         type="text"
         id="genre"
-        v-model="newBook.genre"
+        v-model="currentBook.genre"
         placeholder="Добавьте жанр произведения"
       />
     </div>
@@ -44,64 +44,42 @@
         <a href="/privacy-policy" target="_blank">Политики конфиденциальности</a>
       </label>
     </div>
-    <div class="button-submit">
-      <ButtonWithIcon
-        type="submit"
-        icon="/icons/file-plus.svg"
-        text="Добавить"
-        buttonStyle="success"
-      />
-    </div>
   </form>
-  <Notification
-    v-if="notification.message"
-    :message="notification.message"
-    :type="notification.type"
-    @close="closeNotification"
-  />
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
-import Notification from './components/Notification.vue'
+import { ref, onMounted, watch } from 'vue'
 
-const notification = ref({ message: '', type: '' })
-const newBook = ref({
-  title: '',
-  author: '',
-  year: null,
-  genre: '',
+const props = defineProps({
+  book: {
+    type: Object,
+    default: () => ({
+      title: '',
+      author: '',
+      year: null,
+      genre: '',
+    }),
+  },
+  mode: {
+    type: String,
+    default: 'add',
+  },
 })
 
 const isAgreed = ref(false)
+const currentBook = ref({ ...props.book })
 
-const emit = defineEmits(['book-added'])
+const emit = defineEmits(['submit'])
+const formTitle = computed(() =>
+  props.mode === 'edit' ? 'Редактирование книги' : 'Добавить книгу',
+)
 
-const submitForm = () => {
-  if (!isAgreed.value) {
-    showError('Для добавления книги нужно согласиться с политикой конфиденциальности')
-    return
-  }
-
-  if (newBook.value.title && newBook.value.author) {
-    if (newBook.value.year && newBook.value.year > new Date().getFullYear()) {
-      showError('Год не может быть больше текущего')
-      return
-    }
-    emit('book-added', { ...newBook.value })
-    newBook.value = { title: '', author: '', year: null, genre: '' }
-  } else {
-    showError('Название и автор обязательны для заполнения!')
-  }
-}
-
-const showError = (message) => {
-  notification.value = { message, type: 'error' }
-}
-const closeNotification = () => {
-  notification.value = { message: '', type: '' }
-}
+watch(
+  () => props.book,
+  (newVal) => {
+    currentBook.value = { ...newVal }
+  },
+)
 </script>
 
 <style lang="scss" scoped>
