@@ -66,16 +66,33 @@ export const useBookStore = defineStore('book', {
         !/^\d{4}$/.test(newBook.year) ||
         parseInt(newBook.year) > new Date().getFullYear()
       ) {
-        this.showError('Некорректные данные')
+        this.showError('Некорректные данные книги. Проверьте поля')
         return
       }
       this.books.push(newBook)
       this.saveBooksToLocalStorage()
-      this.showSuccess('Книга добавлена в список')
+      this.showSuccess('Книга добавлена')
     },
-    editBook(book) {
-      Object.assign(this.currentBook, book)
-      this.isModalOpen = true
+    editBook(updatedBook) {
+      const index = this.books.findIndex((book) => book.id === updatedBook.id)
+      if (index === -1) {
+        this.showError('Книга не найдена')
+        return
+      }
+      // Проверка валидации данных как в addBook
+      if (
+        !updatedBook.title ||
+        !updatedBook.author ||
+        !/^\d{4}$/.test(updatedBook.year) ||
+        parseInt(updatedBook.year) > new Date().getFullYear()
+      ) {
+        this.showError('Некорректные данные книги. Проверьте поля')
+        return
+      }
+      Object.assign(this.books[index], updatedBook)
+      this.closeModal()
+      this.saveBooksToLocalStorage()
+      this.showSuccess('Книга изменена')
     },
     deleteBook(bookId) {
       // Принимаем ID книги
