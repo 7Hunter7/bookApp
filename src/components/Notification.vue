@@ -42,37 +42,39 @@ const closeNotification = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 15px;
-  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius-small);
   position: fixed;
-  bottom: 20px;
+  bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  min-width: 300px;
+  min-width: 16rem;
 }
 .notification-text {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 150%;
   text-align: center;
-  color: white;
-  flex-grow: 1;
+  color: var(--background-color);
 }
 .success,
 .error {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   background-size: 1.25rem 12.25rem contain;
   background-repeat: no-repeat;
-  background-position: left;
+  background-position: 0.5rem;
 }
-.success {
+.success::before {
   background-image: url(/icons/file-plus.svg);
-  background-color: #28a745;
+  background-color: var(--success-color);
 }
 .error {
   background-image: url(/icons/file-x.svg);
-  background-color: #dc3545;
+  background-color: var(--error-color);
 }
 .close-button {
   background-color: transparent;
