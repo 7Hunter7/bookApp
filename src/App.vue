@@ -2,7 +2,11 @@
   <div class="app">
     <h1>Список Книг</h1>
     <SearchInput @search="handleSearch" />
-    <BookListHeader @open-add-modal="openAddModal" :bookCount="filteredBooks.length" />
+    <BookListHeader
+      @open-add-modal="openAddModal"
+      :bookCount="filteredBooks.length"
+      :searchQuery="bookStore.searchQuery"
+    />
     <BookList :books="filteredBooks" @edit-book="openEditModal" />
     <Modal :isOpen="isModalOpen" @close="closeModal" :title="modalTitle" width="35rem">
       <BookModalForm
