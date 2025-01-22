@@ -1,5 +1,9 @@
 import { defineStore } from 'pinia'
 
+function generateId() {
+  return Math.random().toString(36).substring(2) + Date.now().toString(36)
+}
+
 export const useBookStore = defineStore('book', {
   state: () => ({
     books: [
@@ -69,6 +73,7 @@ export const useBookStore = defineStore('book', {
         this.showError('Некорректные данные книги. Проверьте поля')
         return
       }
+      newBook.id = generateId()
       this.books.push(newBook)
       this.saveBooksToLocalStorage()
       this.showSuccess('Книга добавлена в список')
