@@ -31,7 +31,6 @@ const handleInput = () => {
   gap: 25px;
   padding: 1rem 2.5rem;
   margin-top: 1rem;
-  margin-bottom: 1rem;
   background-color: var(--light-grey-color);
 }
 img {

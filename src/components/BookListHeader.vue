@@ -1,11 +1,12 @@
 <template>
   <div class="book-list-header">
-    <div class="book-list-header-text">
-      <p v-if="searchQuery">Книги по запросу «{{ searchQuery }}»</p>
-      <p v-else>Книги в каталоге</p>
-      <p v-else>
-        {{ bookCount }}
-      </p>
+    <div v-if="searchQuery" class="book-list-header-text">
+      <p>Книги по запросу «{{ searchQuery }}»</p>
+    </div>
+    <div v-else class="book-list-header-text">
+      <h3>
+        Книг в каталоге <span> {{ bookCount }}</span>
+      </h3>
     </div>
     <ButtonWithIcon
       type="submit"
@@ -40,14 +41,16 @@ const emit = defineEmits(['open-add-modal'])
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0rem 2.5rem;
+  padding: 1rem 2.5rem;
+  background-color: var(--light-grey-color);
 }
 .book-list-header-text {
   display: flex;
   flex-direction: row;
   gap: 1.25rem;
 }
-.book-list-header-text p {
-  margin: 0;
+.book-list-header-text span {
+  color: var(--secondary-color);
+  margin: 0.5rem;
 }
 </style>
