@@ -1,10 +1,8 @@
 <template>
   <div class="book-list-header">
     <div class="book-list-header-text">
-      <p>Книги в каталоге</p>
-      <p>
-        {{ bookCount }}
-      </p>
+      <p v-if="searchQuery">Книги по запросу «{{ searchQuery }}»</p>
+      <p v-else>Книги в каталоге</p>
     </div>
     <ButtonWithIcon
       type="submit"
@@ -20,9 +18,9 @@
 import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
 
 const props = defineProps({
-  bookCount: {
-    type: Number,
-    required: true,
+  searchQuery: {
+    type: String,
+    default: '',
   },
 })
 
