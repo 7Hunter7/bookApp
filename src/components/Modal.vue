@@ -1,6 +1,6 @@
 <template>
   <div v-if="isOpen" class="modal-overlay">
-    <div class="modal">
+    <div class="modal" :style="{ maxWidth: width }">
       <div class="modal-header">
         <slot name="header">
           <h2>{{ title }}</h2>
@@ -28,6 +28,10 @@ defineProps({
     type: String,
     default: 'Модальное окно',
   },
+  width: {
+    type: String,
+    default: '600px',
+  },
 })
 
 defineEmits(['close'])
@@ -48,10 +52,8 @@ defineEmits(['close'])
 }
 
 .modal {
-  background-color: #2a2a2a;
   padding: 20px;
   border-radius: 8px;
-  max-width: 600px;
   width: 100%;
 }
 
