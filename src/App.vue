@@ -69,7 +69,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useBookStore } from '@/stores/bookStore'
 import BookList from '@/views/BookList.vue'
 import BookModalForm from '@/components/BookModalForm.vue'
@@ -115,7 +115,9 @@ const openAddModal = () => {
 
 const openEditModal = (book) => {
   console.log('Запуск openEditModal')
-  bookStore.editBook(book)
+  mode.value = 'edit'
+  bookStore.currentBook = { ...book }
+  bookStore.isModalOpen = true
   isBookModalFormValid.value = true
 }
 
