@@ -1,6 +1,11 @@
 <template>
   <ul class="book-list">
-    <BookItem v-for="book in books" :key="book.title" :book="book" />
+    <BookItem
+      v-for="book in books"
+      :key="book.id"
+      :book="book"
+      @edit-book="$emit('edit-book', book)"
+    />
   </ul>
 </template>
 
@@ -13,6 +18,8 @@ defineProps({
     required: true,
   },
 })
+
+const emit = defineEmits(['edit-book'])
 </script>
 
 <style lang="scss" scoped>
