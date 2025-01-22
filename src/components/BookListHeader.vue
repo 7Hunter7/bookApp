@@ -1,0 +1,48 @@
+<template>
+  <div class="book-list-header">
+    <div class="book-list-header-text">
+      <p>Книги в каталоге</p>
+      <p>
+        {{ bookCount }}
+      </p>
+    </div>
+    <ButtonWithIcon
+      type="submit"
+      icon="/icons/file-plus.svg"
+      text="Добавить книгу"
+      buttonStyle="success"
+      @click="$emit('open-add-modal')"
+    />
+  </div>
+</template>
+
+<script setup>
+import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
+
+const props = defineProps({
+  bookCount: {
+    type: Number,
+    required: true,
+  },
+})
+
+const emit = defineEmits(['open-add-modal'])
+</script>
+
+<style lang="scss" scoped>
+.book-list-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem 2.5rem;
+}
+.book-list-header-text {
+  display: flex;
+  flex-direction: row;
+  gap: 1.25rem;
+}
+.book-list-header-text p {
+  margin: 0;
+}
+</style>
