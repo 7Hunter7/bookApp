@@ -80,7 +80,9 @@ import Notification from './components/Notification.vue'
 
 const bookStore = useBookStore()
 
-bookStore.initializeStore() // Загрузка данных из localStorage
+onMounted(() => {
+  bookStore.initializeStore() // Загрузка данных из localStorage
+})
 
 const filteredBooks = computed(() => bookStore.filteredBooks)
 const isModalOpen = computed(() => bookStore.isModalOpen)
