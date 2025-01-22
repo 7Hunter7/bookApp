@@ -51,19 +51,28 @@ const closeNotification = () => {
   z-index: 10;
   min-width: 300px;
 }
-
 .notification-text {
   color: white;
   flex-grow: 1;
 }
-
+.success,
+.error {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 0.25rem;
+}
 .success {
+  background-image: url(/icons/file-plus.svg);
   background-color: #28a745;
 }
 .error {
+  background-image: url(/icons/file-x.svg);
   background-color: #dc3545;
 }
-
 .close-button {
   background-color: transparent;
   border: none;
