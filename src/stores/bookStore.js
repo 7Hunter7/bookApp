@@ -66,8 +66,13 @@ export const useBookStore = defineStore('book', {
       // Валидация данных
       if (
         !newBook.title ||
+        !newBook.title.trim() ||
         !newBook.author ||
-        (parseInt(newBook.year) > 0 && parseInt(newBook.year) <= new Date().getFullYear())
+        !newBook.author.trim() ||
+        !newBook.year ||
+        isNaN(newBook.year) ||
+        parseInt(newBook.year) <= 0 ||
+        parseInt(newBook.year) > new Date().getFullYear()
       ) {
         this.showError('Книга не добавлена')
         this.showError('Некорректные данные книги. Проверьте поля')
@@ -87,8 +92,13 @@ export const useBookStore = defineStore('book', {
       // Проверка валидации данных как в addBook
       if (
         !updatedBook.title ||
+        !updatedBook.title.trim() ||
         !updatedBook.author ||
-        (!parseInt(newBook.year) > 0 && parseInt(newBook.year) <= new Date().getFullYear())
+        !updatedBook.author.trim() ||
+        !updatedBook.year ||
+        isNaN(updatedBook.year) ||
+        parseInt(updatedBook.year) <= 0 ||
+        parseInt(updatedBook.year) > new Date().getFullYear()
       ) {
         this.showError('Некорректные данные книги. Проверьте поля')
         return
