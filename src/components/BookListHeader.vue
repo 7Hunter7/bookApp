@@ -3,6 +3,9 @@
     <div class="book-list-header-text">
       <p v-if="searchQuery">Книги по запросу «{{ searchQuery }}»</p>
       <p v-else>Книги в каталоге</p>
+      <p v-else>
+        {{ bookCount }}
+      </p>
     </div>
     <ButtonWithIcon
       type="submit"
@@ -18,6 +21,10 @@
 import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
 
 const props = defineProps({
+  bookCount: {
+    type: Number,
+    required: true,
+  },
   searchQuery: {
     type: String,
     default: '',
