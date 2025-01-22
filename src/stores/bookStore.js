@@ -66,12 +66,13 @@ export const useBookStore = defineStore('book', {
         !/^\d{4}$/.test(newBook.year) ||
         parseInt(newBook.year) > new Date().getFullYear()
       ) {
+        this.showError('Книга не добавлена')
         this.showError('Некорректные данные книги. Проверьте поля')
         return
       }
       this.books.push(newBook)
       this.saveBooksToLocalStorage()
-      this.showSuccess('Книга добавлена')
+      this.showSuccess('Книга добавлена в список')
     },
     editBook(updatedBook) {
       const index = this.books.findIndex((book) => book.id === updatedBook.id)
