@@ -1,8 +1,8 @@
 <template>
-  <form class="book-form" @submit.prevent="$emit('submit', currentBook)">
+  <form class="book-form" @submit.prevent="submitForm">
     <div class="book-form-content">
       <h3>{{ formTitle }}</h3>
-      <p>Заполните все поля и добавьте книгу в список</p>
+      <p>{{ formDescription }}</p>
     </div>
     <div>
       <label for="title">Название</label>
@@ -74,6 +74,11 @@ const emit = defineEmits(['submit', 'update:isFormValid'])
 const formTitle = computed(() =>
   props.mode === 'edit' ? 'Редактирование книги' : 'Добавить книгу',
 )
+const formDescription = computed(() =>
+  props.mode === 'edit'
+    ? 'Внесите изменения в карточке'
+    : 'Заполните все поля и добавьте книгу в список',
+)
 
 const isFormValid = computed(() => {
   return (
@@ -87,6 +92,14 @@ const isFormValid = computed(() => {
     currentBook.value.year <= new Date().getFullYear()
   )
 })
+
+const submitForm = () => {
+  if (isFormValid.value) {
+    emit('submit', currentBook.value)
+  } else {
+    emit('update:isFormValid', false)
+  }
+}
 
 watch(
   () => props.book,
