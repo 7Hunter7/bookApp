@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { validateBook } from '../utils/validation'
 
 function generateId() {
   return Math.random().toString(36).substring(2) + Date.now().toString(36)
@@ -63,17 +64,7 @@ export const useBookStore = defineStore('book', {
       }
     },
     addBook(newBook) {
-      // Валидация данных
-      if (
-        !newBook.title ||
-        !newBook.title.trim() ||
-        !newBook.author ||
-        !newBook.author.trim() ||
-        !newBook.year ||
-        isNaN(newBook.year) ||
-        parseInt(newBook.year) <= 0 ||
-        parseInt(newBook.year) > new Date().getFullYear()
-      ) {
+      if (!validateBook(newBook)) {
         this.showError('Книга не добавлена')
         this.showError('Некорректные данные книги. Проверьте поля')
         return
@@ -89,17 +80,7 @@ export const useBookStore = defineStore('book', {
         this.showError('Книга не найдена')
         return
       }
-      // Проверка валидации данных как в addBook
-      if (
-        !updatedBook.title ||
-        !updatedBook.title.trim() ||
-        !updatedBook.author ||
-        !updatedBook.author.trim() ||
-        !updatedBook.year ||
-        isNaN(updatedBook.year) ||
-        parseInt(updatedBook.year) <= 0 ||
-        parseInt(updatedBook.year) > new Date().getFullYear()
-      ) {
+      if (!validateBook(updatedBook)) {
         this.showError('Некорректные данные книги. Проверьте поля')
         return
       }
@@ -109,7 +90,6 @@ export const useBookStore = defineStore('book', {
       this.showSuccess('Книга изменена')
     },
     deleteBook(bookId) {
-      // Принимаем ID книги
       this.isModalOpen = false
       this.isDeleteModalOpen = true
       this.currentBook = this.books.find((book) => book.id === bookId) // Ищем книгу по ID
@@ -122,15 +102,6 @@ export const useBookStore = defineStore('book', {
       this.closeDeleteModal()
       this.saveBooksToLocalStorage()
       this.showSuccess('Книга удалена. Вернуть её')
-    },
-    updateBook(updatedBook) {
-      const index = this.books.findIndex((book) => book.id === updatedBook.id)
-      if (index !== -1) {
-        Object.assign(this.books[index], updatedBook)
-      }
-      this.closeModal()
-      this.saveBooksToLocalStorage()
-      this.showSuccess('Книга изменена')
     },
     closeModal() {
       this.isModalOpen = false
