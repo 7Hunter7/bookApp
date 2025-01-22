@@ -2,15 +2,9 @@
   <div class="app">
     <h1>Список Книг</h1>
     <SearchInput @search="handleSearch" />
-    <ButtonWithIcon
-      type="submit"
-      icon="/icons/file-plus.svg"
-      text="Добавить книгу"
-      buttonStyle="success"
-      @click="openAddModal"
-    />
+    <BookListHeader @open-add-modal="openAddModal" :bookCount="filteredBooks.length" />
     <BookList :books="filteredBooks" @edit-book="openEditModal" />
-    <Modal :isOpen="isModalOpen" @close="closeModal" :title="modalTitle">
+    <Modal :isOpen="isModalOpen" @close="closeModal" :title="modalTitle" width="35rem">
       <BookModalForm
         :book="currentBook"
         :mode="mode"
@@ -48,7 +42,12 @@
       </template>
     </Modal>
 
-    <Modal :isOpen="isDeleteModalOpen" title="Подтверждение удаления" @close="closeDeleteModal">
+    <Modal
+      :isOpen="isDeleteModalOpen"
+      title="Подтверждение удаления"
+      @close="closeDeleteModal"
+      width="35rem"
+    >
       <template #header>
         <h2>Подтверждение удаления</h2>
       </template>
@@ -72,6 +71,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useBookStore } from '@/stores/bookStore'
 import BookList from '@/views/BookList.vue'
+import BookListHeader from '@/components/BookListHeader.vue'
 import BookModalForm from '@/components/BookModalForm.vue'
 import SearchInput from '@/components/SearchInput.vue'
 import Modal from '@/components/Modal.vue'
@@ -99,7 +99,7 @@ const handleBookSubmit = (book) => {
   if (mode.value === 'add') {
     bookStore.addBook(book)
   } else {
-    bookStore.updateBook(book)
+    bookStore.editBook(book)
   }
 }
 
@@ -134,7 +134,7 @@ const closeDeleteModal = () => {
 }
 
 const saveBook = () => {
-  bookStore.updateBook(currentBook.value)
+  bookStore.editBook(currentBook.value)
 }
 
 const confirmDelete = () => {
