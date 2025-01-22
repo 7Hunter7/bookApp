@@ -78,9 +78,12 @@ const formTitle = computed(() =>
 const isFormValid = computed(() => {
   return (
     currentBook.value.title &&
+    currentBook.value.title.trim() &&
     currentBook.value.author &&
+    currentBook.value.author.trim() &&
     currentBook.value.year !== null &&
     !isNaN(currentBook.value.year) &&
+    parseInt(currentBook.value.year) > 0 &&
     currentBook.value.year <= new Date().getFullYear()
   )
 })
