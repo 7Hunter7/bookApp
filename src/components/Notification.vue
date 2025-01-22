@@ -52,18 +52,19 @@ const closeNotification = () => {
   min-width: 300px;
 }
 .notification-text {
+  text-align: center;
   color: white;
   flex-grow: 1;
 }
 .success,
 .error {
-  display: inline-block;
-  width: 1.25rem;
-  height: 1.25rem;
-  background-size: contain;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-size: 1.25rem 12.25rem contain;
   background-repeat: no-repeat;
-  background-position: center;
-  margin-right: 0.25rem;
+  background-position: left;
 }
 .success {
   background-image: url(/icons/file-plus.svg);
