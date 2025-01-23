@@ -102,6 +102,7 @@ const modalTitle = computed(() =>
 const handleBookSubmit = (book) => {
   if (mode.value === 'add') {
     bookStore.addBook(book)
+    bookStore.closeAddModal()
   } else {
     bookStore.editBook(book)
   }
