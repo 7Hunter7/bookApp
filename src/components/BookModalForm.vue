@@ -188,18 +188,6 @@ watch(isFormValid, (newVal) => {
 </script>
 
 <style lang="scss" scoped>
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 5;
-}
 .book-form {
   display: flex;
   flex-direction: column;
@@ -221,11 +209,6 @@ watch(isFormValid, (newVal) => {
 .book-form-description {
   display: flex;
   flex-direction: column;
-}
-.close-button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
 }
 div {
   display: flex;
@@ -283,7 +266,6 @@ select {
   cursor: pointer;
   position: relative;
 }
-
 .policy input[type='checkbox']:before {
   content: '';
   position: absolute;

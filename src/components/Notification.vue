@@ -76,9 +76,4 @@ const closeNotification = () => {
   background-image: url(/icons/file-x.svg);
   background-color: var(--error-color);
 }
-.close-button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
 </style>
