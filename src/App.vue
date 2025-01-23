@@ -8,12 +8,13 @@
       :searchQuery="bookStore.searchQuery"
     />
     <BookList :books="filteredBooks" @edit-book="openEditModal" />
-    <Modal :isOpen="isModalOpen" @close="closeModal" :title="modalTitle" width="35rem">
-      <BookModalForm
-        :book="currentBook"
-        :mode="mode"
-        @update:isFormValid="isBookModalFormValid = $event"
-      />
+    <BookModalForm
+      :isOpen="isModalOpen"
+      @close="closeModal"
+      :book="currentBook"
+      :mode="mode"
+      @update:isFormValid="isBookModalFormValid = $event"
+    >
       <template v-if="mode === 'edit'">
         <div class="modal-actions">
           <ButtonWithIcon
@@ -44,7 +45,7 @@
           />
         </div>
       </template>
-    </Modal>
+    </BookModalForm>
 
     <Modal
       :isOpen="isDeleteModalOpen"
