@@ -11,13 +11,11 @@
 
 <script setup>
 import BookItem from '@/components/BookItem.vue'
+import { useBookStore } from '@/stores/bookStore'
 
-defineProps({
-  books: {
-    type: Array,
-    required: true,
-  },
-})
+const bookStore = useBookStore()
+
+const books = computed(() => bookStore.books)
 
 const emit = defineEmits(['edit-book'])
 </script>
