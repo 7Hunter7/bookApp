@@ -49,36 +49,35 @@
         <a href="/privacy-policy" target="_blank">Политики конфиденциальности</a>
       </label>
     </div>
-
-    <!-- Кнопки "Сохранить/Удалить" для редактирования -->
-    <div v-if="mode === 'edit'" class="modal-actions">
-      <ButtonWithIcon
-        type="button"
-        icon="/icons/file-check.svg"
-        text="Сохранить"
-        buttonStyle="success"
-        :disabled="!isFormValid"
-        @click="saveBook"
-      />
-      <ButtonWithIcon
-        type="button"
-        icon="/icons/trash.svg"
-        buttonStyle="errors"
-        @click="deleteBook"
-      />
-    </div>
-    <!-- Кнопка "Добавить" для добавления -->
-    <div v-else class="modal-actions">
-      <ButtonWithIcon
-        type="submit"
-        icon="/icons/file-plus.svg"
-        text="Добавить"
-        buttonStyle="success"
-        :disabled="!isFormValid"
-        @click="addBook"
-      />
-    </div>
   </form>
+  <!-- Кнопки для редактирования -->
+  <div v-if="mode === 'edit'" class="modal-actions">
+    <ButtonWithIcon
+      type="button"
+      icon="/icons/file-check.svg"
+      text="Сохранить"
+      buttonStyle="success"
+      :disabled="!isFormValid"
+      @click="saveBook"
+    />
+    <ButtonWithIcon
+      type="button"
+      icon="/icons/trash.svg"
+      buttonStyle="errors"
+      @click="deleteBook"
+    />
+  </div>
+  <!-- Кнопка для добавления -->
+  <div v-else class="modal-actions">
+    <ButtonWithIcon
+      type="submit"
+      icon="/icons/file-plus.svg"
+      text="Добавить"
+      buttonStyle="success"
+      :disabled="!isFormValid"
+      @click="addBook"
+    />
+  </div>
 </template>
 
 <script setup>
