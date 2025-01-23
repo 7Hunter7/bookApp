@@ -2,9 +2,7 @@
   <div v-if="isOpen" class="modal-overlay">
     <div class="modal" :style="{ maxWidth: width }">
       <div class="modal-header">
-        <slot name="header">
-          <h2>{{ title }}</h2>
-        </slot>
+        <slot name="header"></slot>
         <button class="close-button" @click="$emit('close')">
           <img :src="Close" alt="close" />
         </button>
