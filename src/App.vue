@@ -7,7 +7,7 @@
       :bookCount="filteredBooks.length"
       :searchQuery="bookStore.searchQuery"
     />
-    <BookList :books="filteredBooks" @edit-book="openEditModal" />
+    <BookList @edit-book="openEditModal" />
     <Modal :isOpen="isModalOpen" @close="closeModal" :title="modalTitle" width="35rem">
       <BookModalForm
         :isOpen="isModalOpen"
