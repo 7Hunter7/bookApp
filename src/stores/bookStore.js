@@ -84,24 +84,20 @@ export const useBookStore = defineStore('book', {
         this.showError('Некорректные данные книги. Проверьте поля')
         return
       }
-      Object.assign(this.books[index], updatedBook)
-      this.closeModal()
+      this.books[index] = updatedBook
       this.saveBooksToLocalStorage()
       this.showSuccess('Книга изменена')
     },
     deleteBook(bookId) {
-      this.isModalOpen = false
-      this.isDeleteModalOpen = true
-      this.currentBook = this.books.find((book) => book.id === bookId) // Ищем книгу по ID
-    },
-    confirmDelete() {
-      const index = this.books.findIndex((book) => book.id === this.currentBook.id)
+      const index = this.books.findIndex((book) => book.id === bookId)
       if (index !== -1) {
         this.books.splice(index, 1)
+        this.saveBooksToLocalStorage()
+        this.showSuccess('Книга удалена. Вернуть её')
+      } else {
+        this.showError('Книга не найдена')
       }
-      this.closeDeleteModal()
-      this.saveBooksToLocalStorage()
-      this.showSuccess('Книга удалена. Вернуть её')
+      this.closeModal()
     },
     closeModal() {
       this.isModalOpen = false
@@ -112,10 +108,12 @@ export const useBookStore = defineStore('book', {
       this.currentBook = {}
     },
     openAddModal() {
-      this.isAddModalOpen = true
+      this.isModalOpen = true
+      this.mode = 'add'
+      this.currentBook = {}
     },
     closeAddModal() {
-      this.isAddModalOpen = false
+      this.isModalOpen = false
     },
     setSearchQuery(query) {
       this.searchQuery = query
