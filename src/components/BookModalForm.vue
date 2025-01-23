@@ -1,5 +1,5 @@
 <template>
-  <form class="book-form" @submit.prevent="submitForm">
+  <form v-if="isOpen" class="book-form" @submit.prevent="submitForm">
     <div class="book-form-content">
       <div class="book-form-description">
         <h3>{{ formTitle }}</h3>
