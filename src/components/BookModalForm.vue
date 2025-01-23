@@ -198,7 +198,7 @@ watch(isFormValid, (newVal) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 5;
 }
 .book-form {
   display: flex;
