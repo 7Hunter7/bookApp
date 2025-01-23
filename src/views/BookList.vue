@@ -10,6 +10,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import BookItem from '@/components/BookItem.vue'
 import { useBookStore } from '@/stores/bookStore'
 
