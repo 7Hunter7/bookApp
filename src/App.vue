@@ -8,44 +8,19 @@
       :searchQuery="bookStore.searchQuery"
     />
     <BookList :books="filteredBooks" @edit-book="openEditModal" />
-    <BookModalForm
-      :isOpen="isModalOpen"
-      @close="closeModal"
-      :book="currentBook"
-      :mode="mode"
-      @update:isFormValid="isBookModalFormValid = $event"
-    >
-      <template v-if="mode === 'edit'">
-        <div class="modal-actions">
-          <ButtonWithIcon
-            type="submit"
-            icon="/icons/file-check.svg"
-            text="Сохранить"
-            buttonStyle="success"
-            :disabled="!isBookModalFormValid"
-            @click="saveBook"
-          />
-          <ButtonWithIcon
-            type="submit"
-            icon="/icons/trash.svg"
-            buttonStyle="errors"
-            @click="() => openDeleteModal(currentBook.id)"
-          />
-        </div>
-      </template>
-      <template v-else>
-        <div class="modal-actions">
-          <ButtonWithIcon
-            type="submit"
-            icon="/icons/file-plus.svg"
-            text="Добавить"
-            buttonStyle="success"
-            :disabled="!isBookModalFormValid"
-            @click="handleBookSubmit(currentBook.value)"
-          />
-        </div>
-      </template>
-    </BookModalForm>
+    <Modal :isOpen="isModalOpen" @close="closeModal" :title="modalTitle" width="35rem">
+      <BookModalForm
+        :isOpen="isModalOpen"
+        :book="currentBook"
+        :mode="mode"
+        @add="addBook"
+        @edit="editBook"
+        @delete="deleteBook"
+        @close="closeModal"
+        @update:isFormValid="isBookModalFormValid = $event"
+        @validation-error="showValidationError"
+      />
+    </Modal>
 
     <Modal
       :isOpen="isDeleteModalOpen"
@@ -80,8 +55,7 @@ import BookListHeader from '@/components/BookListHeader.vue'
 import BookModalForm from '@/components/BookModalForm.vue'
 import SearchInput from '@/components/SearchInput.vue'
 import Modal from '@/components/Modal.vue'
-import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
-import Notification from './components/Notification.vue'
+import Notification from '@/components/Notification.vue'
 
 const bookStore = useBookStore()
 
@@ -99,15 +73,6 @@ const isBookModalFormValid = ref(true)
 const modalTitle = computed(() =>
   mode.value === 'edit' ? 'Редактирование книги' : 'Добавить книгу',
 )
-
-const handleBookSubmit = (book) => {
-  if (mode.value === 'add') {
-    bookStore.addBook(book)
-    bookStore.closeAddModal()
-  } else {
-    bookStore.editBook(book)
-  }
-}
 
 const handleSearch = (query) => {
   bookStore.setSearchQuery(query)
@@ -127,10 +92,6 @@ const openEditModal = (book) => {
   isBookModalFormValid.value = true
 }
 
-const openDeleteModal = (bookId) => {
-  bookStore.deleteBook(bookId)
-}
-
 const closeModal = () => {
   bookStore.closeModal()
 }
@@ -139,8 +100,17 @@ const closeDeleteModal = () => {
   bookStore.closeDeleteModal()
 }
 
-const saveBook = () => {
-  bookStore.editBook(currentBook.value)
+const addBook = (book) => {
+  bookStore.addBook(book)
+  bookStore.closeModal()
+}
+
+const editBook = (book) => {
+  bookStore.editBook(book)
+}
+
+const deleteBook = (bookId) => {
+  bookStore.deleteBook(bookId)
 }
 
 const confirmDelete = () => {
@@ -149,6 +119,10 @@ const confirmDelete = () => {
 
 const closeNotification = () => {
   bookStore.closeNotification()
+}
+
+const showValidationError = (message) => {
+  bookStore.showError(message)
 }
 </script>
 
