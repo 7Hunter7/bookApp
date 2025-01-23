@@ -197,7 +197,6 @@ watch(isFormValid, (newVal) => {
   border-radius: var(--border-radius);
   background-color: var(--background-color);
   width: 29rem;
-  height: 31.3125rem;
 }
 .book-form-content {
   margin: 0rem;
@@ -235,7 +234,6 @@ select {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  gap: 0.5rem;
 }
 .policy {
   display: flex;
