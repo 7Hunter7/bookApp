@@ -3,6 +3,9 @@
     <div class="book-form-content">
       <h3>{{ formTitle }}</h3>
       <p>{{ formDescription }}</p>
+      <button class="close-button" @click="$emit('close')">
+        <img :src="Close" alt="close" />
+      </button>
     </div>
     <div>
       <label for="title">Название</label>
@@ -49,6 +52,7 @@
 
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue'
+import Close from '/icons/close-grey.svg'
 
 const props = defineProps({
   book: {
@@ -94,10 +98,11 @@ const isFormValid = computed(() => {
 })
 
 const submitForm = () => {
-  if (isFormValid.value) {
+  if (isFormValid.value && isAgreed.value) {
     emit('submit', currentBook.value)
   } else {
     emit('update:isFormValid', false)
+    if (!isAgreed.value) alert('Необходимо принять условия политики конфиденциальности')
   }
 }
 
@@ -126,6 +131,11 @@ watch(isFormValid, (newVal) => {
   border-radius: var(--border-radius);
   max-width: 29rem;
   max-height: 31.3125rem;
+}
+.close-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 div {
   display: flex;
