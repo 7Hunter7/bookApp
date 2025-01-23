@@ -1,11 +1,11 @@
 <template>
-  <form v-if="isOpen" class="book-form" @submit.prevent="submitForm">
+  <form class="book-form" @submit.prevent="submitForm">
     <div class="book-form-content">
       <div class="book-form-description">
         <h3>{{ formTitle }}</h3>
         <p>{{ formDescription }}</p>
       </div>
-      <button class="close-button" @click="$emit('close')">
+      <button class="close-button" @click="closeForm">
         <img :src="Close" alt="close" />
       </button>
     </div>
@@ -49,11 +49,40 @@
         <a href="/privacy-policy" target="_blank">Политики конфиденциальности</a>
       </label>
     </div>
+
+    <!-- Кнопки "Сохранить/Удалить" для редактирования -->
+    <div v-if="mode === 'edit'" class="modal-actions">
+      <ButtonWithIcon
+        type="button"
+        icon="/icons/file-check.svg"
+        text="Сохранить"
+        buttonStyle="success"
+        :disabled="!isFormValid"
+        @click="saveBook"
+      />
+      <ButtonWithIcon
+        type="button"
+        icon="/icons/trash.svg"
+        buttonStyle="errors"
+        @click="deleteBook"
+      />
+    </div>
+    <!-- Кнопка "Добавить" для добавления -->
+    <div v-else class="modal-actions">
+      <ButtonWithIcon
+        type="submit"
+        icon="/icons/file-plus.svg"
+        text="Добавить"
+        buttonStyle="success"
+        :disabled="!isFormValid"
+        @click="addBook"
+      />
+    </div>
   </form>
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue'
+import { ref, watch, computed } from 'vue'
 import Close from '/icons/close-grey.svg'
 
 const props = defineProps({
@@ -71,12 +100,17 @@ const props = defineProps({
     type: String,
     default: 'add',
   },
+  isOpen: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const isAgreed = ref(false)
 const currentBook = ref({ ...props.book })
 
-const emit = defineEmits(['submit', 'close', 'update:isFormValid'])
+const emit = defineEmits(['add', 'edit', 'delete', 'close', 'update:isFormValid'])
+
 const formTitle = computed(() =>
   props.mode === 'edit' ? 'Редактирование книги' : 'Добавить книгу',
 )
@@ -101,11 +135,36 @@ const isFormValid = computed(() => {
 
 const submitForm = () => {
   if (isFormValid.value && isAgreed.value) {
-    emit('submit', currentBook.value)
   } else {
     emit('update:isFormValid', false)
-    if (!isAgreed.value) alert('Необходимо принять условия политики конфиденциальности')
+    emit('validation-error', 'Необходимо принять условия политики конфиденциальности')
   }
+}
+
+const addBook = () => {
+  if (isFormValid.value && isAgreed.value) {
+    emit('add', currentBook.value)
+  } else {
+    emit('update:isFormValid', false)
+    emit('validation-error', 'Необходимо принять условия политики конфиденциальности')
+  }
+}
+
+const saveBook = () => {
+  if (isFormValid.value && isAgreed.value) {
+    emit('edit', currentBook.value)
+  } else {
+    emit('update:isFormValid', false)
+    emit('validation-error', 'Необходимо принять условия политики конфиденциальности')
+  }
+}
+
+const deleteBook = () => {
+  emit('delete', currentBook.value.id)
+}
+
+const closeForm = () => {
+  emit('close')
 }
 
 watch(
@@ -138,6 +197,10 @@ watch(isFormValid, (newVal) => {
   justify-content: space-between;
   align-items: flex-start;
 }
+.book-form-description {
+  display: flex;
+  flex-direction: column;
+}
 .close-button {
   background-color: transparent;
   border: none;
@@ -164,11 +227,12 @@ select {
   border-radius: 0.25rem;
   background-color: var(--light-grey-color);
 }
-.button-submit {
+.modal-actions {
   display: flex;
   flex-direction: row;
-  justify-content: end;
-  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
 }
 .policy {
   display: flex;
@@ -215,11 +279,5 @@ select {
 }
 .policy input[type='checkbox']:checked:before {
   transform: translate(-50%, -50%) scale(1);
-}
-.button-submit {
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  align-items: center;
 }
 </style>
