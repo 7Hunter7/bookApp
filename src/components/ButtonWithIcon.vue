@@ -90,24 +90,26 @@ const iconFilter = computed(() => {
 .button-style--default,
 .button-style--success,
 .button-style--errors {
-  stroke: var(--light-grey-color);
+  color: var(--background-color);
 }
 .button-style--default:hover,
-.button-style--default:active {
-  stroke: var(--error-color);
-}
 .button-style--success:hover,
-.button-style--errors:hover,
+.button-style--errors:hover {
+  fill: var(--light-grey-color);
+}
+.button-style--default:active,
 .button-style--success:active,
 .button-style--errors:active {
-  stroke: var(--background-color);
+  color: var(--grey-color);
 }
 .button-style--text {
   background-color: transparent;
   color: var(--background-color);
 }
-.button-style--text:hover,
-.button-style--text:active {
+.button-style--text:hover {
   color: var(--light-grey-color);
+}
+.button-style--text:active {
+  color: var(--grey-color);
 }
 </style>
