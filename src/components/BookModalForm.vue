@@ -1,82 +1,89 @@
 <template>
-  <form class="book-form" @submit.prevent="submitForm">
-    <div class="book-form-content">
-      <div class="book-form-description">
-        <h3>{{ formTitle }}</h3>
-        <p>{{ formDescription }}</p>
+  <div class="modal-overlay">
+    <form class="book-form" @submit.prevent="submitForm">
+      <div class="book-form-content">
+        <div class="book-form-description">
+          <h3>{{ formTitle }}</h3>
+          <p>{{ formDescription }}</p>
+        </div>
+        <button class="close-button" @click="closeForm">
+          <img :src="Close" alt="close" />
+        </button>
       </div>
-      <button class="close-button" @click="closeForm">
-        <img :src="Close" alt="close" />
-      </button>
-    </div>
-    <div>
-      <label for="title">Название</label>
-      <input
-        type="text"
-        id="title"
-        v-model="currentBook.title"
-        placeholder="Название произведения"
-        required
+      <div>
+        <label for="title">Название</label>
+        <input
+          type="text"
+          id="title"
+          v-model="currentBook.title"
+          placeholder="Название произведения"
+          required
+        />
+      </div>
+      <div>
+        <label for="author">Автор</label>
+        <input
+          type="text"
+          id="author"
+          v-model="currentBook.author"
+          placeholder="Имя и фамилия автора"
+          required
+        />
+      </div>
+      <div>
+        <label for="year">Год</label>
+        <input
+          type="number"
+          id="year"
+          v-model.number="currentBook.year"
+          placeholder="Год выпуска"
+        />
+      </div>
+      <div>
+        <label for="genre">Жанр</label>
+        <input
+          type="text"
+          id="genre"
+          v-model="currentBook.genre"
+          placeholder="Добавьте жанр произведения"
+        />
+      </div>
+      <div class="policy">
+        <label>
+          <input type="checkbox" v-model="isAgreed" />
+          Я согласен с условиями
+          <a href="/privacy-policy" target="_blank">Политики конфиденциальности</a>
+        </label>
+      </div>
+    </form>
+    <!-- Кнопки для редактирования -->
+    <div v-if="mode === 'edit'" class="modal-actions">
+      <ButtonWithIcon
+        type="button"
+        icon="/icons/file-check.svg"
+        text="Сохранить"
+        buttonStyle="success"
+        :disabled="!isFormValid"
+        @click="saveBook"
+      />
+      <ButtonWithIcon
+        type="button"
+        icon="/icons/trash.svg"
+        buttonStyle="errors"
+        @click="deleteBook"
       />
     </div>
-    <div>
-      <label for="author">Автор</label>
-      <input
-        type="text"
-        id="author"
-        v-model="currentBook.author"
-        placeholder="Имя и фамилия автора"
-        required
+    <!-- Кнопка для добавления -->
+    <div v-else class="modal-actions">
+      <ButtonWithIcon
+        type="submit"
+        icon="/icons/file-plus.svg"
+        text="Добавить"
+        buttonStyle="success"
+        :disabled="!isFormValid"
+        @click="addBook"
       />
     </div>
-    <div>
-      <label for="year">Год</label>
-      <input type="number" id="year" v-model.number="currentBook.year" placeholder="Год выпуска" />
-    </div>
-    <div>
-      <label for="genre">Жанр</label>
-      <input
-        type="text"
-        id="genre"
-        v-model="currentBook.genre"
-        placeholder="Добавьте жанр произведения"
-      />
-    </div>
-    <div class="policy">
-      <label>
-        <input type="checkbox" v-model="isAgreed" />
-        Я согласен с условиями
-        <a href="/privacy-policy" target="_blank">Политики конфиденциальности</a>
-      </label>
-    </div>
-  </form>
-  <!-- Кнопки для редактирования -->
-  <div v-if="mode === 'edit'" class="modal-actions">
-    <ButtonWithIcon
-      type="button"
-      icon="/icons/file-check.svg"
-      text="Сохранить"
-      buttonStyle="success"
-      :disabled="!isFormValid"
-      @click="saveBook"
-    />
-    <ButtonWithIcon
-      type="button"
-      icon="/icons/trash.svg"
-      buttonStyle="errors"
-      @click="deleteBook"
-    />
-  </div>
-  <!-- Кнопка для добавления -->
-  <div v-else class="modal-actions">
-    <ButtonWithIcon
-      type="submit"
-      icon="/icons/file-plus.svg"
-      text="Добавить"
-      buttonStyle="success"
-      :disabled="!isFormValid"
-      @click="addBook"
-    />
   </div>
 </template>
 
@@ -179,6 +186,18 @@ watch(isFormValid, (newVal) => {
 </script>
 
 <style lang="scss" scoped>
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
 .book-form {
   display: flex;
   flex-direction: column;
