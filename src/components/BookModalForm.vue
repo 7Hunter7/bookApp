@@ -55,41 +55,43 @@
           <a href="/privacy-policy" target="_blank">Политики конфиденциальности</a>
         </label>
       </div>
+
+      <!-- Кнопка для добавления -->
+      <div v-if="mode === 'add'" class="modal-actions">
+        <ButtonWithIcon
+          type="submit"
+          icon="/icons/file-plus.svg"
+          text="Добавить"
+          buttonStyle="success"
+          :disabled="!isFormValid"
+          @click="addBook"
+        />
+      </div>
+      <div v-else class="modal-actions">
+        <ButtonWithIcon
+          type="button"
+          icon="/icons/file-check.svg"
+          text="Сохранить"
+          buttonStyle="success"
+          :disabled="!isFormValid"
+          @click="saveBook"
+        />
+        <ButtonWithIcon
+          type="button"
+          icon="/icons/trash.svg"
+          buttonStyle="errors"
+          @click="deleteBook"
+        />
+      </div>
     </form>
     <!-- Кнопки для редактирования -->
-    <div v-if="mode === 'edit'" class="modal-actions">
-      <ButtonWithIcon
-        type="button"
-        icon="/icons/file-check.svg"
-        text="Сохранить"
-        buttonStyle="success"
-        :disabled="!isFormValid"
-        @click="saveBook"
-      />
-      <ButtonWithIcon
-        type="button"
-        icon="/icons/trash.svg"
-        buttonStyle="errors"
-        @click="deleteBook"
-      />
-    </div>
-    <!-- Кнопка для добавления -->
-    <div v-else class="modal-actions">
-      <ButtonWithIcon
-        type="submit"
-        icon="/icons/file-plus.svg"
-        text="Добавить"
-        buttonStyle="success"
-        :disabled="!isFormValid"
-        @click="addBook"
-      />
-    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, watch, computed } from 'vue'
 import Close from '/icons/close-grey.svg'
+import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
 
 const props = defineProps({
   book: {
@@ -205,8 +207,8 @@ watch(isFormValid, (newVal) => {
   padding: 2rem;
   border: 2px solid var(--light-grey-color);
   border-radius: var(--border-radius);
-  max-width: 29rem;
-  max-height: 31.3125rem;
+  background-color: var(--background-color);
+  max-width: 35rem;
 }
 .book-form-content {
   margin: 0rem;

@@ -9,7 +9,7 @@
     />
     <BookList @edit-book="openEditModal" />
     <BookModalForm
-      :isOpen="isModalOpen"
+      v-if="isModalOpen"
       :book="currentBook"
       :mode="mode"
       @add="addBook"
