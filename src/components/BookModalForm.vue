@@ -79,7 +79,7 @@
         <ButtonWithIcon
           type="button"
           icon="/icons/trash.svg"
-          buttonStyle="errors"
+          buttonStyle="default"
           @click="deleteBook"
         />
       </div>
@@ -208,7 +208,8 @@ watch(isFormValid, (newVal) => {
   border: 2px solid var(--light-grey-color);
   border-radius: var(--border-radius);
   background-color: var(--background-color);
-  max-width: 35rem;
+  width: 29rem;
+  height: 31.3125rem;
 }
 .book-form-content {
   margin: 0rem;
