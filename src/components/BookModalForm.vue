@@ -252,8 +252,7 @@ select {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 0.5rem;
 }
 .policy {
   display: flex;
