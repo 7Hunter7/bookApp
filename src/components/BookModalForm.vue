@@ -1,8 +1,10 @@
 <template>
   <form class="book-form" @submit.prevent="submitForm">
     <div class="book-form-content">
-      <h3>{{ formTitle }}</h3>
-      <p>{{ formDescription }}</p>
+      <div class="book-form-description">
+        <h3>{{ formTitle }}</h3>
+        <p>{{ formDescription }}</p>
+      </div>
       <button class="close-button" @click="$emit('close')">
         <img :src="Close" alt="close" />
       </button>
@@ -74,7 +76,7 @@ const props = defineProps({
 const isAgreed = ref(false)
 const currentBook = ref({ ...props.book })
 
-const emit = defineEmits(['submit', 'update:isFormValid'])
+const emit = defineEmits(['submit', 'close', 'update:isFormValid'])
 const formTitle = computed(() =>
   props.mode === 'edit' ? 'Редактирование книги' : 'Добавить книгу',
 )
@@ -119,9 +121,6 @@ watch(isFormValid, (newVal) => {
 </script>
 
 <style lang="scss" scoped>
-.book-form-content {
-  margin: 0rem;
-}
 .book-form {
   display: flex;
   flex-direction: column;
@@ -131,6 +130,13 @@ watch(isFormValid, (newVal) => {
   border-radius: var(--border-radius);
   max-width: 29rem;
   max-height: 31.3125rem;
+}
+.book-form-content {
+  margin: 0rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 .close-button {
   background-color: transparent;
