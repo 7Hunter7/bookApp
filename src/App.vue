@@ -12,7 +12,7 @@
       <BookModalForm
         :book="currentBook"
         :mode="mode"
-        @submit="handleBookSubmit"
+        @submit="handleBookSubmit(currentBook.value)"
         @update:isFormValid="isBookModalFormValid = $event"
       />
       <template v-if="mode === 'edit'">
@@ -41,6 +41,7 @@
             text="Добавить"
             buttonStyle="success"
             :disabled="!isBookModalFormValid"
+            @click="handleBookSubmit(currentBook.value)"
           />
         </div>
       </template>
