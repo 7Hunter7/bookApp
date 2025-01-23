@@ -68,6 +68,9 @@ const iconFilter = computed(() => {
   align-items: center;
   gap: 0.25rem;
 }
+.button-with-icon:active {
+  padding: 0.8125rem 1rem 0.6875rem 1rem;
+}
 .icon {
   display: inline-block;
   width: 1.25rem;
@@ -77,7 +80,11 @@ const iconFilter = computed(() => {
   background-position: center;
   margin-right: 0.25rem;
 }
-
+.button-style--default,
+.button-style--success,
+.button-style--errors {
+  color: var(--background-color);
+}
 .button-style--default {
   background-color: var(--light-grey-color);
 }
@@ -87,20 +94,14 @@ const iconFilter = computed(() => {
 .button-style--errors {
   background-color: var(--error-color);
 }
-.button-style--default,
-.button-style--success,
-.button-style--errors {
-  color: var(--background-color);
+.button-style--default:hover {
+  background-color: var(--light-grey-color), rgba(0, 0, 0, 0.1);
 }
-.button-style--default:hover,
-.button-style--success:hover,
+.button-style--success:hover {
+  background-color: var(--success-color), rgba(0, 0, 0, 0.1);
+}
 .button-style--errors:hover {
-  fill: var(--light-grey-color);
-}
-.button-style--default:active,
-.button-style--success:active,
-.button-style--errors:active {
-  color: var(--grey-color);
+  background-color: var(--error-color), rgba(0, 0, 0, 0.1);
 }
 .button-style--text {
   background-color: transparent;

@@ -19,6 +19,9 @@
   --padding-small: 0.5rem;
   --padding-medium: 1rem;
   --padding-large: 1.25rem;
+  --default-icon-color: #f5f6f6;
+  --hover-pressed-icon-color: #fff;
+  --hover-pressed-icon-deleted-color: #900b09;
 }
 
 body {
