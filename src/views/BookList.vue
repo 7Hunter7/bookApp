@@ -16,7 +16,7 @@ import { useBookStore } from '@/stores/bookStore'
 
 const bookStore = useBookStore()
 
-const books = computed(() => bookStore.books)
+const books = computed(() => bookStore.filteredBooks)
 
 const emit = defineEmits(['edit-book'])
 </script>

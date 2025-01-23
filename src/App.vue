@@ -8,19 +8,17 @@
       :searchQuery="bookStore.searchQuery"
     />
     <BookList @edit-book="openEditModal" />
-    <Modal :isOpen="isModalOpen" @close="closeModal" :title="modalTitle" width="35rem">
-      <BookModalForm
-        :isOpen="isModalOpen"
-        :book="currentBook"
-        :mode="mode"
-        @add="addBook"
-        @edit="editBook"
-        @delete="deleteBook"
-        @close="closeModal"
-        @update:isFormValid="isBookModalFormValid = $event"
-        @validation-error="showValidationError"
-      />
-    </Modal>
+    <BookModalForm
+      :isOpen="isModalOpen"
+      :book="currentBook"
+      :mode="mode"
+      @add="addBook"
+      @edit="editBook"
+      @delete="deleteBook"
+      @close="closeModal"
+      @update:isFormValid="isBookModalFormValid = $event"
+      @validation-error="showValidationError"
+    />
 
     <Modal
       :isOpen="isDeleteModalOpen"
