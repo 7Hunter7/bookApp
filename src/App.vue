@@ -12,7 +12,6 @@
       <BookModalForm
         :book="currentBook"
         :mode="mode"
-        @submit="handleBookSubmit(currentBook.value)"
         @update:isFormValid="isBookModalFormValid = $event"
       />
       <template v-if="mode === 'edit'">
