@@ -117,7 +117,14 @@ const props = defineProps({
 const isAgreed = ref(false)
 const currentBook = ref({ ...props.book })
 
-const emit = defineEmits(['add', 'edit', 'delete', 'close', 'update:isFormValid'])
+const emit = defineEmits([
+  'add',
+  'edit',
+  'delete',
+  'close',
+  'update:isFormValid',
+  'show-delete-notification',
+])
 
 const formTitle = computed(() =>
   props.mode === 'edit' ? 'Редактирование книги' : 'Добавить книгу',
@@ -178,7 +185,7 @@ const saveBook = () => {
 }
 
 const deleteBook = () => {
-  emit('delete', currentBook.value.id)
+  emit('show-delete-notification', { ...currentBook.value })
 }
 
 const closeForm = () => {
