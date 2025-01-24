@@ -18,28 +18,15 @@
       @close="closeModal"
       @update:isFormValid="isBookModalFormValid = $event"
       @validation-error="showValidationError"
+      @show-delete-notification="showDeleteConfirmation"
     />
-
-    <Modal
-      :isOpen="isDeleteModalOpen"
-      title="Подтверждение удаления"
-      @close="closeDeleteModal"
-      width="35rem"
-    >
-      <template #header>
-        <h2>Подтверждение удаления</h2>
-      </template>
-      <p>Вы действительно хотите удалить книгу "{{ currentBook?.title }}"?</p>
-      <div class="modal-actions">
-        <button class="confirm-delete-button" @click="confirmDelete">Да</button>
-        <button @click="closeDeleteModal">Нет</button>
-      </div>
-    </Modal>
 
     <Notification
       v-if="notification.message"
       :message="notification.message"
       :type="notification.type"
+      :showButtons="notification.showButtons"
+      :confirmAction="confirmDelete"
       @close="closeNotification"
     />
   </div>
@@ -52,7 +39,6 @@ import BookList from '@/views/BookList.vue'
 import BookListHeader from '@/components/BookListHeader.vue'
 import BookModalForm from '@/components/BookModalForm.vue'
 import SearchInput from '@/components/SearchInput.vue'
-import Modal from '@/components/Modal.vue'
 import Notification from '@/components/Notification.vue'
 
 const bookStore = useBookStore()
@@ -63,7 +49,6 @@ onMounted(() => {
 
 const filteredBooks = computed(() => bookStore.filteredBooks)
 const isModalOpen = computed(() => bookStore.isModalOpen)
-const isDeleteModalOpen = computed(() => bookStore.isDeleteModalOpen)
 const mode = ref('add')
 const currentBook = computed(() => bookStore.currentBook)
 const notification = computed(() => bookStore.notification)
@@ -93,9 +78,13 @@ const openEditModal = (book) => {
 const closeModal = () => {
   bookStore.closeModal()
 }
-
-const closeDeleteModal = () => {
-  bookStore.closeDeleteModal()
+const showDeleteConfirmation = (book) => {
+  bookStore.notification = {
+    message: `Вы действительно хотите удалить книгу "${book.title}"?`,
+    type: 'confirm',
+    showButtons: true,
+  }
+  bookStore.currentBook = book
 }
 
 const addBook = (book) => {
@@ -106,13 +95,10 @@ const addBook = (book) => {
 const editBook = (book) => {
   bookStore.editBook(book)
 }
-
-const deleteBook = (bookId) => {
-  bookStore.deleteBook(bookId)
-}
-
-const confirmDelete = () => {
-  bookStore.confirmDelete()
+const deleteBook = () => {
+  bookStore.deleteBook(bookStore.currentBook.id)
+  bookStore.closeModal()
+  bookStore.closeNotification()
 }
 
 const closeNotification = () => {
