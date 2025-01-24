@@ -92,6 +92,8 @@
 import { ref, watch, computed } from 'vue'
 import Close from '/icons/close-grey.svg'
 import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
+import { useBookStore } from '@/stores/bookStore'
+const bookStore = useBookStore()
 
 const props = defineProps({
   book: {
@@ -116,6 +118,7 @@ const props = defineProps({
 
 const isAgreed = ref(false)
 const currentBook = ref({ ...props.book })
+const validationError = ref(null)
 
 const emit = defineEmits([
   'add',
@@ -136,27 +139,32 @@ const formDescription = computed(() =>
 )
 
 const isFormValid = computed(() => {
-  return (
-    currentBook.value.title &&
-    currentBook.value.title.trim() &&
-    currentBook.value.author &&
-    currentBook.value.author.trim() &&
-    currentBook.value.year !== null &&
-    !isNaN(currentBook.value.year) &&
-    parseInt(currentBook.value.year) > 0 &&
-    currentBook.value.year <= new Date().getFullYear() &&
-    isAgreed.value
-  )
+  let error = null
+  if (!currentBook.value.title || !currentBook.value.title.trim()) {
+    error = 'Название книги обязательно'
+  } else if (!currentBook.value.author || !currentBook.value.author.trim()) {
+    error = 'Автор книги обязателен'
+  } else if (
+    currentBook.value.year === null ||
+    isNaN(currentBook.value.year) ||
+    parseInt(currentBook.value.year) <= 0 ||
+    currentBook.value.year > new Date().getFullYear()
+  ) {
+    error = 'Некорректный год'
+  } else if (!isAgreed.value) {
+    error = 'Необходимо принять условия политики конфиденциальности'
+  }
+  validationError.value = error
+  return !error
 })
 
 const submitForm = () => {
   if (isFormValid.value) {
-  } else {
-    emit('update:isFormValid', false)
-    emit(
-      'validation-error',
-      'Необходимо принять условия политики конфиденциальности и проверить корректность данных',
-    )
+    if (props.mode === 'add') {
+      emit('add', currentBook.value)
+    } else {
+      emit('edit', currentBook.value)
+    }
   }
 }
 
@@ -165,10 +173,6 @@ const addBook = () => {
     emit('add', currentBook.value)
   } else {
     emit('update:isFormValid', false)
-    emit(
-      'validation-error',
-      'Необходимо принять условия политики конфиденциальности и проверить корректность данных',
-    )
   }
 }
 
@@ -177,10 +181,6 @@ const saveBook = () => {
     emit('edit', currentBook.value)
   } else {
     emit('update:isFormValid', false)
-    emit(
-      'validation-error',
-      'Необходимо принять условия политики конфиденциальности и проверить корректность данных',
-    )
   }
 }
 
@@ -205,35 +205,8 @@ watch(isFormValid, (newVal) => {
 </script>
 
 <style lang="scss" scoped>
-.book-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 2rem;
-  border: 2px solid var(--light-grey-color);
-  border-radius: var(--border-radius);
-  background-color: var(--background-color);
-  width: 29rem;
-}
-.book-form-content {
-  margin: 0rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-.book-form-description {
-  display: flex;
-  flex-direction: column;
-}
-div {
-  display: flex;
-  flex-direction: column;
-}
-h3 {
-  margin: 0rem;
-}
-p {
+.error-message {
+  color: var(--error-color);
   margin-top: 0.5rem;
 }
 label {
