@@ -79,10 +79,10 @@ const setSortField = (field) => {
     border: none;
     cursor: pointer;
     padding: 0.3rem 0.75rem;
-    border-bottom: 3px solid transparent;
+    border-bottom: 2px solid transparent;
     transition: border-bottom 0.3s ease-in-out;
     &.active {
-      border-bottom: 3px solid var(--primary-color);
+      border-bottom: 2px solid var(--primary-color);
     }
   }
 }
