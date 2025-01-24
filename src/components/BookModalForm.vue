@@ -205,6 +205,37 @@ watch(isFormValid, (newVal) => {
 </script>
 
 <style lang="scss" scoped>
+.book-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  border: 2px solid var(--light-grey-color);
+  border-radius: var(--border-radius);
+  background-color: var(--background-color);
+  width: 29rem;
+}
+.book-form-content {
+  margin: 0rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.book-form-description {
+  display: flex;
+  flex-direction: column;
+}
+div {
+  display: flex;
+  flex-direction: column;
+}
+h3 {
+  margin: 0rem;
+}
+p {
+  margin-top: 0.5rem;
+}
 .error-message {
   color: var(--error-color);
   margin-top: 0.5rem;
