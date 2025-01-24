@@ -67,6 +67,7 @@
           @click="addBook"
         />
       </div>
+      <!-- Кнопки для редактирования -->
       <div v-else class="modal-actions">
         <ButtonWithIcon
           type="button"
@@ -84,7 +85,6 @@
         />
       </div>
     </form>
-    <!-- Кнопки для редактирования -->
   </div>
 </template>
 
@@ -137,33 +137,43 @@ const isFormValid = computed(() => {
     currentBook.value.year !== null &&
     !isNaN(currentBook.value.year) &&
     parseInt(currentBook.value.year) > 0 &&
-    currentBook.value.year <= new Date().getFullYear()
+    currentBook.value.year <= new Date().getFullYear() &&
+    isAgreed.value
   )
 })
 
 const submitForm = () => {
-  if (isFormValid.value && isAgreed.value) {
+  if (isFormValid.value) {
   } else {
     emit('update:isFormValid', false)
-    emit('validation-error', 'Необходимо принять условия политики конфиденциальности')
+    emit(
+      'validation-error',
+      'Необходимо принять условия политики конфиденциальности и проверить корректность данных',
+    )
   }
 }
 
 const addBook = () => {
-  if (isFormValid.value && isAgreed.value) {
+  if (isFormValid.value) {
     emit('add', currentBook.value)
   } else {
     emit('update:isFormValid', false)
-    emit('validation-error', 'Необходимо принять условия политики конфиденциальности')
+    emit(
+      'validation-error',
+      'Необходимо принять условия политики конфиденциальности и проверить корректность данных',
+    )
   }
 }
 
 const saveBook = () => {
-  if (isFormValid.value && isAgreed.value) {
+  if (isFormValid.value) {
     emit('edit', currentBook.value)
   } else {
     emit('update:isFormValid', false)
-    emit('validation-error', 'Необходимо принять условия политики конфиденциальности')
+    emit(
+      'validation-error',
+      'Необходимо принять условия политики конфиденциальности и проверить корректность данных',
+    )
   }
 }
 

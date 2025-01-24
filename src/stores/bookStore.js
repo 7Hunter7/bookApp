@@ -45,15 +45,32 @@ export const useBookStore = defineStore('book', {
     isAddModalOpen: false,
     currentBook: {},
     notification: { message: '', type: '' },
+    sortField: null,
+    sortDirection: 'asc', // 'asc' или 'desc'
   }),
   getters: {
     filteredBooks: (state) => {
-      if (!state.searchQuery) {
-        return state.books
+      let filtered = [...state.books]
+
+      if (state.searchQuery) {
+        filtered = filtered.filter((book) =>
+          book.title.toLowerCase().includes(state.searchQuery.toLowerCase()),
+        )
       }
-      return state.books.filter((book) =>
-        book.title.toLowerCase().includes(state.searchQuery.toLowerCase()),
-      )
+
+      if (state.sortField) {
+        filtered.sort((a, b) => {
+          const aValue = a[state.sortField]
+          const bValue = b[state.sortField]
+
+          const comparison =
+            typeof aValue === 'number'
+              ? aValue - bValue
+              : String(aValue).localeCompare(String(bValue))
+          return state.sortDirection === 'asc' ? comparison : -comparison
+        })
+      }
+      return filtered
     },
   },
   actions: {
@@ -117,6 +134,14 @@ export const useBookStore = defineStore('book', {
     },
     setSearchQuery(query) {
       this.searchQuery = query
+    },
+    setSortField(field) {
+      if (this.sortField === field) {
+        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc'
+      } else {
+        this.sortField = field
+        this.sortDirection = 'asc'
+      }
     },
     showSuccess(message) {
       this.notification = { message, type: 'success' }

@@ -10,6 +10,15 @@
         Книги в каталоге <span> {{ bookCount }}</span>
       </h2>
     </div>
+    <div class="sort-buttons">
+      <button @click="setSortField('title')" :class="{ active: sortField === 'title' }">
+        Название
+      </button>
+      <button @click="setSortField('author')" :class="{ active: sortField === 'author' }">
+        Автор
+      </button>
+      <button @click="setSortField('year')" :class="{ active: sortField === 'year' }">Год</button>
+    </div>
     <ButtonWithIcon
       type="submit"
       icon="/icons/file-plus.svg"
@@ -22,6 +31,10 @@
 
 <script setup>
 import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
+import { useBookStore } from '@/stores/bookStore'
+import { computed } from 'vue'
+
+const bookStore = useBookStore()
 
 const props = defineProps({
   bookCount: {
@@ -33,8 +46,12 @@ const props = defineProps({
     default: '',
   },
 })
-
+const sortField = computed(() => bookStore.sortField)
 const emit = defineEmits(['open-add-modal'])
+
+const setSortField = (field) => {
+  bookStore.setSortField(field)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -45,5 +62,20 @@ const emit = defineEmits(['open-add-modal'])
   justify-content: space-between;
   padding: 1rem 2.5rem;
   background-color: var(--light-grey-color);
+}
+.sort-buttons {
+  display: flex;
+  gap: 10px;
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.3s ease;
+    &.active {
+      border-bottom: 2px solid var(--primary-color);
+    }
+  }
 }
 </style>
