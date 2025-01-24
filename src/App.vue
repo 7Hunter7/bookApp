@@ -83,6 +83,10 @@ const showDeleteConfirmation = (book) => {
     message: `Вы действительно хотите удалить книгу "${book.title}"?`,
     type: 'confirm',
     showButtons: true,
+    confirmAction: () => {
+      bookStore.deleteBook(book.id)
+      bookStore.closeNotification()
+    },
   }
   bookStore.currentBook = book
 }
@@ -98,6 +102,10 @@ const editBook = (book) => {
 const deleteBook = () => {
   bookStore.deleteBook(bookStore.currentBook.id)
   bookStore.closeModal()
+  bookStore.closeNotification()
+}
+const confirmDelete = () => {
+  bookStore.deleteBook(bookStore.currentBook.id)
   bookStore.closeNotification()
 }
 

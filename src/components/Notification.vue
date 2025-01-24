@@ -3,9 +3,9 @@
     <span class="notification-text">{{ message }}</span>
     <div v-if="showButtons" class="notification-actions">
       <button class="confirm-button" @click="confirmAction">Да</button>
-      <button class="cancel-button" @click="closeNotification">Нет</button>
+      <button class="cancel-button" @click="$emit('close')">Нет</button>
     </div>
-    <button v-else class="close-button" @click="closeNotification">
+    <button v-else class="close-button" @click="$emit('close')">
       <img :src="Close" alt="close" />
     </button>
   </div>
@@ -40,15 +40,15 @@ const emit = defineEmits(['close'])
 onMounted(() => {
   if (props.type !== 'confirm') {
     setTimeout(() => {
-      closeNotification()
+      emit('close')
     }, 3000)
   }
 })
 
-const closeNotification = () => {
-  isVisible.value = false
-  emit('close')
-}
+// const closeNotification = () => {
+//   isVisible.value = false
+//   emit('close')
+// }
 </script>
 
 <style lang="scss" scoped>
@@ -64,30 +64,28 @@ const closeNotification = () => {
   transform: translateX(-50%);
   z-index: 10;
   min-width: 16rem;
+  &.confirm {
+    background-color: var(--error-color);
+    color: var(--background-color);
+    flex-direction: column;
+  }
+  &.success {
+    background-color: var(--success-color);
+    color: var(--background-color);
+  }
+  &.error {
+    background-color: var(--error-color);
+    color: var(--background-color);
+  }
 }
-.notification-text {
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 150%;
-  text-align: center;
-  color: var(--background-color);
-}
-.success,
-.error {
+.notification-actions {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background-size: 1.25rem 12.25rem contain;
-  background-repeat: no-repeat;
-  background-position: 0.5rem;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 0.5rem;
 }
-.success::before {
-  background-image: url(/icons/file-plus.svg);
-  background-color: var(--success-color);
-}
-.error {
-  background-image: url(/icons/file-x.svg);
-  background-color: var(--error-color);
+.notification-text {
+  text-align: center;
 }
 </style>
