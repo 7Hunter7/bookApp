@@ -1,7 +1,11 @@
 <template>
   <div v-if="isVisible" :class="['notification', type]">
     <span class="notification-text">{{ message }}</span>
-    <button class="close-button" @click="closeNotification">
+    <div v-if="showButtons" class="notification-actions">
+      <button class="confirm-button" @click="confirmAction">Да</button>
+      <button class="cancel-button" @click="closeNotification">Нет</button>
+    </div>
+    <button v-else class="close-button" @click="closeNotification">
       <img :src="Close" alt="close" />
     </button>
   </div>
@@ -19,16 +23,26 @@ const props = defineProps({
   type: {
     type: String,
     default: 'success',
-    validator: (value) => ['success', 'error'].includes(value),
+    validator: (value) => ['success', 'error', 'confirm'].includes(value),
+  },
+  showButtons: {
+    type: Boolean,
+    default: false,
+  },
+  confirmAction: {
+    type: Function,
+    default: null,
   },
 })
 const isVisible = ref(true)
 
 const emit = defineEmits(['close'])
 onMounted(() => {
-  setTimeout(() => {
-    closeNotification()
-  }, 3000)
+  if (props.type !== 'confirm') {
+    setTimeout(() => {
+      closeNotification()
+    }, 3000)
+  }
 })
 
 const closeNotification = () => {
