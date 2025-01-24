@@ -10,6 +10,16 @@
         Книги в каталоге <span> {{ bookCount }}</span>
       </h2>
     </div>
+    <ButtonWithIcon
+      type="submit"
+      icon="/icons/file-plus.svg"
+      text="Добавить книгу"
+      buttonStyle="success"
+      @click="$emit('open-add-modal')"
+    />
+  </div>
+  <div class="book-list-header-sort">
+    <h2>Сортировка книг</h2>
     <div class="sort-buttons">
       <button @click="setSortField('title')" :class="{ active: sortField === 'title' }">
         Название
@@ -19,13 +29,6 @@
       </button>
       <button @click="setSortField('year')" :class="{ active: sortField === 'year' }">Год</button>
     </div>
-    <ButtonWithIcon
-      type="submit"
-      icon="/icons/file-plus.svg"
-      text="Добавить книгу"
-      buttonStyle="success"
-      @click="$emit('open-add-modal')"
-    />
   </div>
 </template>
 
@@ -55,7 +58,8 @@ const setSortField = (field) => {
 </script>
 
 <style lang="scss" scoped>
-.book-list-header {
+.book-list-header,
+.book-list-header-sort {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -63,18 +67,22 @@ const setSortField = (field) => {
   padding: 1rem 2.5rem;
   background-color: var(--light-grey-color);
 }
+.book-list-header-sort {
+  padding: 0.5rem 2.5rem;
+}
 .sort-buttons {
   display: flex;
-  gap: 10px;
+  gap: 1rem;
   button {
     background-color: transparent;
+    color: var(--primary-color);
     border: none;
     cursor: pointer;
-    padding: 5px 10px;
-    border-bottom: 2px solid transparent;
-    transition: border-bottom 0.3s ease;
+    padding: 0.3rem 0.75rem;
+    border-bottom: 3px solid transparent;
+    transition: border-bottom 0.3s ease-in-out;
     &.active {
-      border-bottom: 2px solid var(--primary-color);
+      border-bottom: 3px solid var(--primary-color);
     }
   }
 }
