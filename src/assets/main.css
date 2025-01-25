@@ -36,10 +36,15 @@ h2 {
   line-height: 100%;
 }
 
-h3 {
+h3,
+button {
   font-weight: 400;
   font-size: 1rem;
   line-height: 120%;
+}
+button {
+  line-height: 150%;
+  color: var(--background-color);
 }
 p,
 input {
@@ -102,7 +107,6 @@ input {
   pointer-events: none;
   transition: box-shadow 0.3s ease;
 }
-
 .base-button:hover::before {
   box-shadow: 0 1px 0px rgba(0, 0, 0, 0.1);
 }
