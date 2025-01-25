@@ -48,7 +48,7 @@
         />
       </svg>
     </span>
-    Добавить
+    <slot v-if="text">{{ text }}</slot>
   </button>
 </template>
 
@@ -56,6 +56,10 @@
 import { ref } from 'vue'
 
 const props = defineProps({
+  text: {
+    type: String,
+    default: null,
+  },
   icon: {
     type: String,
     default: '/icons/file-plus.svg',
@@ -74,7 +78,11 @@ const isActive = ref(false)
 
 <style lang="scss" scoped>
 .add-button {
-  color: var(--background-color);
+  color: var(--light-grey-color);
   background-color: var(--success-color);
+}
+.delete-button:hover,
+.delete-button:active {
+  color: var(--background-color);
 }
 </style>
