@@ -61,13 +61,6 @@
 <script setup>
 import { ref } from 'vue'
 
-const props = defineProps({
-  icon: {
-    type: String,
-    default: '/icons/trash.svg',
-  },
-})
-
 const emit = defineEmits(['click'])
 
 const isHovered = ref(false)
