@@ -9,8 +9,14 @@
     @mouseup="isActive = false"
     @click="$emit('click', $event)"
   >
-    <span class="icon" :style="{ backgroundImage: `url(${icon})` }">
-      <svg width="21" height="21" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+    <span class="icon">
+      <svg
+        width="21"
+        height="21"
+        viewBox="0 0 21 21"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path
           d="M3 5.5H18"
           stroke="currentColor"
@@ -79,7 +85,7 @@ const isActive = ref(false)
   align-items: center;
   gap: 0.25rem;
   background-color: var(--light-grey-color);
-  color: var(--background-color);
+  color: var(--secondary-color);
   position: relative;
   overflow: hidden;
 
@@ -89,23 +95,19 @@ const isActive = ref(false)
     height: 1.25rem;
   }
 }
-
-.delete-button:hover,
-.delete-button:active {
+.delete-button:hover {
   color: var(--error-color);
 }
 
 .delete-button--hovered {
-  background-color: var(--light-grey-color);
   &:hover {
-    background-color: var(--light-grey-color), rgba(0, 0, 0, 0.1);
+    color: var(--error-color);
   }
 }
 
 .delete-button--active {
-  background-color: var(--light-grey-color);
   &:hover {
-    background-color: var(--light-grey-color), rgba(0, 0, 0, 0.1);
+    color: var(--error-color);
   }
 }
 </style>

@@ -77,12 +77,7 @@
           :disabled="!isFormValid"
           @click="saveBook"
         />
-        <ButtonWithIcon
-          type="button"
-          icon="/icons/trash.svg"
-          buttonStyle="default"
-          @click="deleteBook"
-        />
+        <DeleteButton @click="deleteBook" />
       </div>
     </form>
   </div>
@@ -91,6 +86,7 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
 import Close from '/icons/close-grey.svg'
+import DeleteButton from './DeleteButton.vue'
 import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
 import { useBookStore } from '@/stores/bookStore'
 const bookStore = useBookStore()

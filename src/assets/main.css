@@ -51,9 +51,9 @@ input {
 input {
   line-height: 100%;
 }
-span {
+/* span {
   color: var(--secondary-color);
-}
+} */
 .modal-overlay {
   position: fixed;
   top: 0;
