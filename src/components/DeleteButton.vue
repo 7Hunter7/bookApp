@@ -78,14 +78,4 @@ const isActive = ref(false)
 .delete-button:hover {
   color: var(--error-color);
 }
-.delete-button--hovered {
-  &:hover {
-    color: var(--error-color);
-  }
-}
-.delete-button--active {
-  &:hover {
-    color: var(--error-color);
-  }
-}
 </style>
