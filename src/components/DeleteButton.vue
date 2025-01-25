@@ -1,8 +1,8 @@
 <template>
   <button
     type="button"
-    class="delete-button"
-    :class="{ 'delete-button--hovered': isHovered, 'delete-button--active': isActive }"
+    class="delete-button base-button"
+    :class="{ 'base-button--hovered': isHovered, 'base-button--active': isActive }"
     @mouseover="isHovered = true"
     @mouseleave="isHovered = false"
     @mousedown="isActive = true"
@@ -75,36 +75,14 @@ const isActive = ref(false)
 </script>
 
 <style lang="scss" scoped>
-.delete-button {
-  padding: 0.625rem 0.75rem;
-  border-radius: var(--border-radius-small);
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  background-color: var(--light-grey-color);
-  color: var(--secondary-color);
-  position: relative;
-  overflow: hidden;
-
-  svg {
-    display: block;
-    width: 1.25rem;
-    height: 1.25rem;
-  }
-}
 .delete-button:hover {
   color: var(--error-color);
 }
-
 .delete-button--hovered {
   &:hover {
     color: var(--error-color);
   }
 }
-
 .delete-button--active {
   &:hover {
     color: var(--error-color);
