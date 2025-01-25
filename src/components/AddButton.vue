@@ -74,7 +74,7 @@ const isActive = ref(false)
 
 <style lang="scss" scoped>
 .add-button {
-  color: var(--light-grey-color);
+  color: var(--secondary-color);
   background-color: var(--success-color);
 }
 .delete-button:hover,
