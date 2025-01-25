@@ -60,10 +60,6 @@ const props = defineProps({
     type: String,
     default: null,
   },
-  icon: {
-    type: String,
-    default: '/icons/file-plus.svg',
-  },
   disabled: {
     type: Boolean,
     default: false,

@@ -10,13 +10,7 @@
         Книги в каталоге <span> {{ bookCount }}</span>
       </h2>
     </div>
-    <ButtonWithIcon
-      type="submit"
-      icon="/icons/file-plus.svg"
-      text="Добавить книгу"
-      buttonStyle="success"
-      @click="$emit('open-add-modal')"
-    />
+    <AddButton text="Добавить книгу" @click="$emit('open-add-modal')" />
   </div>
   <div class="book-list-header-sort">
     <h2>Сортировка книг</h2>
@@ -33,9 +27,9 @@
 </template>
 
 <script setup>
-import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
-import { useBookStore } from '@/stores/bookStore'
 import { computed } from 'vue'
+import { useBookStore } from '@/stores/bookStore'
+import AddButton from '@/components/AddButton.vue'
 
 const bookStore = useBookStore()
 
