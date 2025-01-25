@@ -42,10 +42,6 @@ button {
   font-size: 1rem;
   line-height: 120%;
 }
-button {
-  line-height: 150%;
-  color: var(--background-color);
-}
 p,
 input {
   font-weight: 400;
