@@ -84,6 +84,5 @@ const isActive = ref(false)
 .add-button:hover svg,
 .add-button:active svg {
   opacity: 1;
-  color: var(--background-color);
 }
 </style>
