@@ -1,8 +1,13 @@
 <template>
   <button
-    :type="type"
-    class="button-with-icon"
-    :class="buttonClass"
+    type="button"
+    class="button-with-icon base-button"
+    :class="{ 'base-button--hovered': isHovered, 'base-button--active': isActive }"
+    :disabled="disabled"
+    @mouseover="isHovered = true"
+    @mouseleave="isHovered = false"
+    @mousedown="isActive = true"
+    @mouseup="isActive = false"
     @click="$emit('click', $event)"
   >
     <span
@@ -10,7 +15,6 @@
       class="icon"
       :style="{
         backgroundImage: `url(${icon})`,
-        filter: iconFilter,
       }"
     ></span>
     <slot v-if="text">{{ text }}</slot>
@@ -18,18 +22,10 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
-  type: {
-    type: String,
-    default: 'submit',
-  },
   icon: {
-    type: String,
-    default: null,
-  },
-  iconColor: {
     type: String,
     default: null,
   },
@@ -37,40 +33,19 @@ const props = defineProps({
     type: String,
     default: null,
   },
-  buttonStyle: {
-    type: String,
-    default: 'default',
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 })
 
 const emit = defineEmits(['click'])
 
-const buttonClass = computed(() => {
-  return `button-style--${props.buttonStyle}`
-})
-
-const iconFilter = computed(() => {
-  if (props.iconColor) {
-    return `brightness(0) saturate(100%) invert(77%) sepia(8%) saturate(446%) hue-rotate(175deg) brightness(105%) contrast(90%)`
-  }
-  return null
-})
+const isHovered = ref(false)
+const isActive = ref(false)
 </script>
 
 <style lang="scss" scoped>
-.button-with-icon {
-  padding: 0.625rem 0.75rem;
-  border-radius: var(--border-radius-small);
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-.button-with-icon:active {
-  box-shadow: 0rem 0.1rem 0.6rem 0.2rem rgba(0, 0, 0, 0.1);
-}
 .icon {
   display: inline-block;
   width: 1.25rem;
@@ -79,32 +54,14 @@ const iconFilter = computed(() => {
   background-repeat: no-repeat;
   background-position: center;
   margin-right: 0.25rem;
+  opacity: 0.5;
+  transition: opacity 0.3s ease-in-out;
 }
-.button-style--default,
-.button-style--success,
-.button-style--errors {
-  color: var(--background-color);
-}
-.button-with-icon:hover,
-.button-with-icon:active {
-  color: var(--grey-color);
-}
-.button-style--default {
-  background-color: var(--light-grey-color);
-}
-.button-style--success {
+.button-with-icon {
   background-color: var(--success-color);
 }
-.button-style--errors {
-  background-color: var(--error-color);
-}
-.button-style--default:hover {
-  background-color: var(--light-grey-color), rgba(0, 0, 0, 0.1);
-}
-.button-style--success:hover {
-  background-color: var(--success-color), rgba(0, 0, 0, 0.1);
-}
-.button-style--errors:hover {
-  background-color: var(--error-color), rgba(0, 0, 0, 0.1);
+.button-with-icon:hover .icon,
+.button-with-icon:active .icon {
+  opacity: 1;
 }
 </style>

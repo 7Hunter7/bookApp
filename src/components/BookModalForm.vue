@@ -58,15 +58,18 @@
 
       <!-- Кнопка для добавления -->
       <div v-if="mode === 'add'" class="modal-actions">
-        <AddButton text="Добавить" :disabled="!isFormValid" @click="addBook" />
+        <ButtonWithIcon
+          text="Добавить"
+          icon="/icons/file-plus.svg"
+          :disabled="!isFormValid"
+          @click="addBook"
+        />
       </div>
       <!-- Кнопки для редактирования -->
       <div v-else class="modal-actions">
         <ButtonWithIcon
-          type="button"
-          icon="/icons/file-check.svg"
           text="Сохранить"
-          buttonStyle="success"
+          icon="/icons/file-check.svg"
           :disabled="!isFormValid"
           @click="saveBook"
         />
@@ -78,11 +81,11 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue'
-import Close from '/icons/close-grey.svg'
-import AddButton from './AddButton.vue'
-import DeleteButton from './DeleteButton.vue'
-import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
 import { useBookStore } from '@/stores/bookStore'
+import Close from '/icons/close-grey.svg'
+import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
+import DeleteButton from './DeleteButton.vue'
+
 const bookStore = useBookStore()
 
 const props = defineProps({

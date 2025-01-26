@@ -10,7 +10,12 @@
         Книги в каталоге <span> {{ bookCount }}</span>
       </h2>
     </div>
-    <AddButton text="Добавить книгу" @click="$emit('open-add-modal')" />
+    <ButtonWithIcon
+      text="Добавить книгу"
+      icon="/icons/file-plus.svg"
+      @click="$emit('open-add-modal')"
+      :disabled="!isFormValid"
+    />
   </div>
   <div class="book-list-header-sort">
     <h2>Сортировка книг</h2>
@@ -29,7 +34,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useBookStore } from '@/stores/bookStore'
-import AddButton from '@/components/AddButton.vue'
+import ButtonWithIcon from '@/components/ButtonWithIcon.vue'
 
 const bookStore = useBookStore()
 
