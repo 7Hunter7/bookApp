@@ -74,11 +74,16 @@ const isActive = ref(false)
 
 <style lang="scss" scoped>
 .add-button {
-  color: var(--secondary-color);
   background-color: var(--success-color);
 }
-.delete-button:hover,
-.delete-button:active {
+.add-button svg {
+  color: var(--background-color);
+  opacity: 0.5;
+  transition: opacity 0.3s ease-in-out;
+}
+.add-button:hover svg,
+.add-button:active svg {
+  opacity: 1;
   color: var(--background-color);
 }
 </style>

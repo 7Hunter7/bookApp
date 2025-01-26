@@ -84,8 +84,8 @@ input {
   gap: 0.25rem;
   position: relative;
   overflow: hidden;
+  color: var(--background-color);
   background-color: var(--light-grey-color);
-  color: var(--secondary-color);
 }
 .base-button svg {
   display: block;

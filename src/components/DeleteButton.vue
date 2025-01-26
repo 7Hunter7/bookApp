@@ -68,6 +68,10 @@ const isActive = ref(false)
 </script>
 
 <style lang="scss" scoped>
+.delete-button {
+  color: var(--secondary-color);
+  transition: color 0.3s ease-in-out;
+}
 .delete-button:hover {
   color: var(--error-color);
 }
