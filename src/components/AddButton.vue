@@ -77,7 +77,6 @@ const isActive = ref(false)
   background-color: var(--success-color);
 }
 .add-button svg {
-  color: var(--background-color);
   opacity: 0.5;
   transition: opacity 0.3s ease-in-out;
 }
