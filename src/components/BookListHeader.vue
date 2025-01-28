@@ -47,6 +47,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 const sortField = computed(() => bookStore.sortField)
 const emit = defineEmits(['open-add-modal'])
