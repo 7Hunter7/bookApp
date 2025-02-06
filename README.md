@@ -8,6 +8,9 @@
 2.  Состояние хранится в Pinia.
 3.  Количество сторонних библиотек минимизировано.
 
+   Макет:
+   [https://www.figma.com/design/Book-App](https://www.figma.com/design/CLaV9D6EFpdZWT2E7HlOMV/Book-App?node-id=0-1&p=f&t=IOEQNqOKHJFEg8kK-0)
+
 ## Функционал
 
 ### Обязательный функционал:
